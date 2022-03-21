@@ -59,28 +59,14 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    {{-- <input id="role" type="text" class="form-control @error('role') is-invalid @enderror"
-                                        name="role" value="{{ old('role') }}" required autocomplete="role" autofocus> --}}
 
 
                                 </div>
                             </div>
 
-                            {{-- <select id="role" type="text" class="form-control @error('role') is-invalid @enderror"
-                                name="role" value="{{ old('role') }}" required autocomplete="role" autofocus">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                            </select> --}}
-
-
-
-
-
                             <div class="row mb-3">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Company Email') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -93,6 +79,58 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <label for="personal_email"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Personal Email') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="personal_email" type="email"
+                                        class="form-control @error('personal_email') is-invalid @enderror"
+                                        name="personal_email" value="{{ old('personal_email') }}" required
+                                        autocomplete="personal_email">
+
+                                    @error('personal_email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="contact_number"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Contact Number') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="contact_number" type="text"
+                                        class="form-control @error('contact_number') is-invalid @enderror"
+                                        name="contact_number" value="{{ old('contact_number') }}" required
+                                        autocomplete="contact_number">
+
+                                    @error('contact_number')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="address"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Personal Address') }}</label>
+
+                                <div class="col-md-6">
+                                    <textarea id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address"
+                                        value="{{ old('address') }}" required autocomplete="address"> </textarea>
+
+                                    @error('address')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
 
                             <div class="row mb-3">
                                 <label for="password"

@@ -36,6 +36,6 @@ class ValidateRole implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'No role selected';
     }
 }
