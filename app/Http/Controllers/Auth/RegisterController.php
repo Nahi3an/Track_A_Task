@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Manager;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Rules\ValidateRole;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+
 
 class RegisterController extends Controller
 {
@@ -51,6 +56,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:8', 'unique:users'],
             'company_name' => ['required', 'string', 'max:255'],
             'role' => ['required', new ValidateRole()],
@@ -70,12 +77,50 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        dd($data);
-        return User::create([
+        User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $user = User::where('email', '=', $data['email'])->first();
+
+        if ($data['role'] == 'manager') {
+            Manager::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'address' => $data['address'],
+                'contact_number' => $data['contact_number'],
+                'user_id' => $user->id,
+                'personal_email' => $data['personal_email']
+            ]);
+        } else {
+            Employee::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'address' => $data['address'],
+                'contact_number' => $data['contact_number'],
+                'user_id' => $user->id,
+                'personal_email' => $data['personal_email']
+            ]);
+        }
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //$this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect()->route('login')->with('success', 'Registration Sucess! Log in to your account!');
     }
 }
