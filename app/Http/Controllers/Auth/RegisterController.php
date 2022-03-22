@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Developer;
 use App\Models\Employee;
 use App\Models\Manager;
+use App\Models\Tester;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Rules\ValidateRole;
@@ -94,8 +96,19 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
                 'personal_email' => $data['personal_email']
             ]);
+        }
+        if ($data['role'] == 'developer') {
+
+            Developer::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'address' => $data['address'],
+                'contact_number' => $data['contact_number'],
+                'user_id' => $user->id,
+                'personal_email' => $data['personal_email']
+            ]);
         } else {
-            Employee::create([
+            Tester::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'address' => $data['address'],
