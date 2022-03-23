@@ -13,7 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('testers', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
+        });
+
+        Schema::table('company_admins', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -22,6 +38,13 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('testers', function (Blueprint $table) {
+            $table->dropForeign('testers_company_id_foreign');
+            $table->dropColumn('company_id');
+        });
+        Schema::table('company_admins', function (Blueprint $table) {
+            $table->dropForeign('company_admins_company_id_foreign');
+            $table->dropColumn('company_id');
+        });
     }
 };
