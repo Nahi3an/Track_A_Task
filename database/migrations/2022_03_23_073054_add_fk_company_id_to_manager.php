@@ -9,19 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      *
-     *
      * @return void
      */
     public function up()
     {
-        Schema::table('companies', function (Blueprint $table) {
+        Schema::table('managers', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('country_id');
-            // $table->string('description');
-            $table->foreign('country_id')
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')
                 ->references('id')
-                ->on('countries');
-            $table->dropColumn('country');
+                ->on('companies');
         });
     }
 
@@ -32,9 +29,9 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::table('companies', function (Blueprint $table) {
-
-        //     $table->dropColumn('description');
-        // });
+        Schema::table('managers', function (Blueprint $table) {
+            $table->dropForeign('company_id');
+            $table->dropColumn('user_id');
+        });
     }
 };
