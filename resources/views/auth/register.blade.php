@@ -70,6 +70,7 @@
                                         class="form-control @error('country') is-invalid @enderror" name="country"
                                         value="{{ old('country') }}" required autocomplete="country" autofocus">
                                         <option value="not_selected">Not Selected</option>
+
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                         @endforeach
@@ -88,10 +89,18 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="company_name" type="text"
+                                    <select id="company_name" type="text"
                                         class="form-control @error('company_name') is-invalid @enderror" name="company_name"
                                         value="{{ old('company_name') }}" required autocomplete="company_name" autofocus>
 
+                                        <option value="not_selected">Not Selected</option>
+
+                                        @foreach ($companies as $company)
+                                            <option value="{{ $company->name }}">{{ $company->name }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
                                     @error('company_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -109,10 +118,13 @@
                                 <div class="col-md-6">
                                     <select id="role" type="text" class="form-control @error('role') is-invalid @enderror"
                                         name="role" value="{{ old('role') }}" required autocomplete="role" autofocus">
+
                                         <option value="not_selected">Not Selected</option>
-                                        <option value="manager">Manager</option>
-                                        <option value="developer">Developer</option>
-                                        <option value="tester">Tester</option>
+
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->name }}">{{ ucwords($role->name) }}</option>
+                                        @endforeach
+
                                     </select>
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">
