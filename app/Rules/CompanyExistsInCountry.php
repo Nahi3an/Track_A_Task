@@ -2,19 +2,20 @@
 
 namespace App\Rules;
 
-use App\Models\Roles;
+use App\Models\Company;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidateSelectField implements Rule
+class CompanyExistsInCountry implements Rule
 {
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($params)
     {
         //
+        $this->type = $params;
     }
 
     /**
@@ -26,12 +27,10 @@ class ValidateSelectField implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($value == 'not_selected') {
-            return false;
-        }
+        $comapany_id = $value;
+        $country_id = $this->type;
 
-        return true;
-        #return Roles::where('name', '=', $value)->count();
+        return Company::where('id', '=', $comapany_id)->where('country_id', '=', $country_id)->get()->count();
     }
 
     /**
@@ -41,6 +40,6 @@ class ValidateSelectField implements Rule
      */
     public function message()
     {
-        return 'Field not selected';
+        return 'The Company not found in selected Country';
     }
 }
