@@ -72,7 +72,13 @@
                                         <option value="not_selected">Not Selected</option>
 
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @if (old('country') == $country->id)
+                                                <option value="{{ $country->id }}" selected>{{ $country->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $country->id }}">{{ $country->name }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('country')
@@ -85,23 +91,28 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="company_name"
+                                <label for="company_id"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="company_name" type="text"
-                                        class="form-control @error('company_name') is-invalid @enderror" name="company_name"
-                                        value="{{ old('company_name') }}" required autocomplete="company_name" autofocus>
+                                    <select id="company_id" type="text"
+                                        class="form-control @error('company_id') is-invalid @enderror" name="company_id"
+                                        value="{{ old('company_id') }}" required autocomplete="company_id" autofocus>
 
                                         <option value="not_selected">Not Selected</option>
 
                                         @foreach ($companies as $company)
-                                            <option value="{{ $company->name }}">{{ $company->name }}
-                                            </option>
+                                            @if (old('company_id') == $company->id)
+                                                <option value="{{ $company->id }}" selected>{{ $company->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $company->id }}">{{ $company->name }}
+                                                </option>
+                                            @endif
                                         @endforeach
 
                                     </select>
-                                    @error('company_name')
+                                    @error('company_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -122,7 +133,13 @@
                                         <option value="not_selected">Not Selected</option>
 
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->name }}">{{ ucwords($role->name) }}</option>
+                                            <@if (old('role') == $role->id)
+                                                <option value="{{ $role->id }}" selected>{{ $role->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $role->id }}">{{ $role->name }}
+                                                </option>
+                                        @endif
                                         @endforeach
 
                                     </select>
@@ -193,7 +210,8 @@
 
                                 <div class="col-md-6">
                                     <textarea id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address"
-                                        value="{{ old('address') }}" required autocomplete="address"> </textarea>
+                                        value="{{ old('address') }}" required
+                                        autocomplete="address">{{ old('address') }} </textarea>
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">

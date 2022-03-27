@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Developer;
 use App\Models\Employee;
 use App\Models\Manager;
+use App\Models\Roles;
 use App\Models\Tester;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Rules\ValidateRole;
+use App\Rules\CompanyExistsInCountry;
+use App\Rules\ValidateSelectField;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -57,12 +59,14 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $country_id = $data['country'];
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:8', 'unique:users'],
-            'company_name' => ['required', 'string', 'max:255'],
-            'role' => ['required', new ValidateRole()],
+            'country' => ['required', new ValidateSelectField()],
+            'company_id' => ['required', new ValidateSelectField(), new CompanyExistsInCountry($country_id)],
+            'role' => ['required', new ValidateSelectField()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'personal_email' => ['required', 'string', 'email', 'max:255', 'unique:employees', 'unique:managers'],
             'contact_number' => ['required', 'string'],
@@ -79,7 +83,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd($data);
+
+
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -87,18 +92,19 @@ class RegisterController extends Controller
         ]);
 
         $user = User::where('email', '=', $data['email'])->first();
+        $role = Roles::where('id', '=', $data['role'])->first();
 
-        if ($data['role'] == 'manager') {
+        if ($role->name == 'manager') {
             Manager::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'address' => $data['address'],
                 'contact_number' => $data['contact_number'],
                 'user_id' => $user->id,
-                'personal_email' => $data['personal_email']
+                'personal_email' => $data['personal_email'],
+                'company_id' => $data['company_id']
             ]);
-        }
-        if ($data['role'] == 'developer') {
+        } else if ($role->name == 'developer') {
 
             Developer::create([
                 'first_name' => $data['first_name'],
@@ -106,7 +112,8 @@ class RegisterController extends Controller
                 'address' => $data['address'],
                 'contact_number' => $data['contact_number'],
                 'user_id' => $user->id,
-                'personal_email' => $data['personal_email']
+                'personal_email' => $data['personal_email'],
+                'company_id' => $data['company_id']
             ]);
         } else {
             Tester::create([
@@ -115,7 +122,9 @@ class RegisterController extends Controller
                 'address' => $data['address'],
                 'contact_number' => $data['contact_number'],
                 'user_id' => $user->id,
-                'personal_email' => $data['personal_email']
+                'personal_email' => $data['personal_email'],
+                'company_id' => $data['company_id']
+
             ]);
         }
     }

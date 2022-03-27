@@ -15,7 +15,8 @@ class Developer extends Model
         'personal_email',
         'contact_number',
         'address',
-        'user_id'
+        'user_id',
+        'company_id'
     ];
 
     public function user()
