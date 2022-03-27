@@ -81,10 +81,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+    // protected function createUser($modelName, $data)
+    // {
+    //     User::create([
+    //         'name' => $data['name'],
+    //         'email' => $data['email'],
+    //         'password' => Hash::make($data['password']),
+    //     ]);
+    // }
     protected function create(array $data)
     {
-
-
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -95,6 +101,8 @@ class RegisterController extends Controller
         $role = Roles::where('id', '=', $data['role'])->first();
 
         if ($role->name == 'manager') {
+            # $modelName = Manager;
+            #$this->createUser($modelName, $data);
             Manager::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
