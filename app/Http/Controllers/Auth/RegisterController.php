@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\Developer;
 use App\Models\Employee;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
-
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -81,28 +82,25 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    // protected function createUser($modelName, $data)
-    // {
-    //     User::create([
-    //         'name' => $data['name'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    // }
+
     protected function create(array $data)
     {
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => 'temp'
         ]);
 
         $user = User::where('email', '=', $data['email'])->first();
         $role = Roles::where('id', '=', $data['role'])->first();
 
         if ($role->name == 'manager') {
-            # $modelName = Manager;
-            #$this->createUser($modelName, $data);
+
+            DB::table('users')
+                ->where('id', $user->id)
+                ->update(['role' => $role->name]);
+
             Manager::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -114,6 +112,10 @@ class RegisterController extends Controller
             ]);
         } else if ($role->name == 'developer') {
 
+            DB::table('users')
+                ->where('id', $user->id)
+                ->update(['role' => $role->name]);
+
             Developer::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -124,6 +126,11 @@ class RegisterController extends Controller
                 'company_id' => $data['company_id']
             ]);
         } else {
+
+            DB::table('users')
+                ->where('id', $user->id)
+                ->update(['role' => $role->name]);
+
             Tester::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
