@@ -21,6 +21,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager');
-Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer');
-Route::get('/tester', [App\Http\Controllers\TesterController::class, 'index'])->name('tester');
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::group(['middleware' => 'manager_role_access'], function () {
+        Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager');
+    });
+    Route::group(['middleware' => 'developer_role_access'], function () {
+        Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer');
+    });
+    Route::group(['middleware' => 'tester_role_access'], function () {
+        Route::get('/tester', [App\Http\Controllers\TesterController::class, 'index'])->name('tester');
+    });
+});
