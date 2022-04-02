@@ -32,14 +32,14 @@ class LoginController extends Controller
     {
         $role = auth()->user()->role;
 
-        if ($role == 'manager') {
+        if ($role == '1') {
             $this->redirectTo = '/manager';
             return   $this->redirectTo;
-        } else if ($role == 'developer') {
+        } else if ($role == '2') {
 
             $this->redirectTo = '/developer';
             return   $this->redirectTo;
-        } else if ($role == 'tester') {
+        } else if ($role == '3') {
 
             $this->redirectTo = '/tester';
             return   $this->redirectTo;

@@ -19,7 +19,7 @@ class TesterRoleAccess
         $role = auth()->user()->role;
 
 
-        if (auth()->check() && $role == 'tester') {
+        if (auth()->check() && $role == '3') {
 
             return $next($request);
         }

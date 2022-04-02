@@ -89,7 +89,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'temp'
+            'role' => ''
         ]);
 
         $user = User::where('email', '=', $data['email'])->first();
@@ -99,8 +99,7 @@ class RegisterController extends Controller
 
             DB::table('users')
                 ->where('id', $user->id)
-                ->update(['role' => $role->name]);
-
+                ->update(['role' => $data['role']]);
             Manager::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -114,7 +113,7 @@ class RegisterController extends Controller
 
             DB::table('users')
                 ->where('id', $user->id)
-                ->update(['role' => $role->name]);
+                ->update(['role' => $data['role']]);
 
             Developer::create([
                 'first_name' => $data['first_name'],
@@ -129,7 +128,7 @@ class RegisterController extends Controller
 
             DB::table('users')
                 ->where('id', $user->id)
-                ->update(['role' => $role->name]);
+                ->update(['role' => $data['role']]);
 
             Tester::create([
                 'first_name' => $data['first_name'],
@@ -143,7 +142,6 @@ class RegisterController extends Controller
             ]);
         }
     }
-
     /**
      * Handle a registration request for the application.
      *

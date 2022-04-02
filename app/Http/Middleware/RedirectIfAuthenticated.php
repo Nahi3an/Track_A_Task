@@ -28,13 +28,13 @@ class RedirectIfAuthenticated
                 $role = auth()->user()->role;
 
 
-                if ($role == 'manager') {
+                if ($role == '1') {
 
                     return redirect()->route('manager');
-                } else if ($role == 'developer') {
+                } else if ($role == '2') {
 
                     return redirect()->route('developer');
-                } else if ($role == 'tester') {
+                } else if ($role == '3') {
 
                     return redirect()->route('tester');
                 }

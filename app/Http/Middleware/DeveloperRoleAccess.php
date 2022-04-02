@@ -19,7 +19,7 @@ class DeveloperRoleAccess
 
         $role = auth()->user()->role;
 
-        if (auth()->check() && $role == 'developer') {
+        if (auth()->check() && $role == '2') {
 
             return $next($request);
         }

@@ -20,7 +20,7 @@ class ManagerRoleAccess
         $role = auth()->user()->role;
 
 
-        if (auth()->check() && $role == 'manager') {
+        if (auth()->check() && $role == '1') {
 
             return $next($request);
         }
