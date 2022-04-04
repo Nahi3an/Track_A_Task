@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     use HasFactory;
+
+
+    public function manager()
+    {
+        return $this->hasMany(Manager::class);
+    }
+
+    public function developer()
+    {
+        return $this->hasMany(Developer::class);
+    }
+
+    public function tester()
+    {
+        return $this->hasMany(Tester::class);
+    }
+
+    public function company_admin()
+    {
+
+        return $this->hasOne(Company_Admin::class);
+    }
 }

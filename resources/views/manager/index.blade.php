@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
+                        <h1 class="m-0">Welcome {{ $manager->first_name . ' ' . $manager->last_name }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -97,22 +97,26 @@
                                                                             class="form-control @error('developer_id_one') is-invalid @enderror"
                                                                             name="developer_id_one"
                                                                             value="{{ old('developer_id_one') }}" required
-                                                                            autocomplete="developer_id_one" autofocus>
+                                                                            autocomplete="developer_id_one" autofocus
+                                                                            style="color: black">
 
                                                                             <option value="not_selected">Not Selected
                                                                             </option>
 
-                                                                            {{-- @foreach ($companies as $company)
-                                                                        @if (old('developer_id_one') == $company->id)
-                                                                            <option value="{{ $company->id }}" selected>
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @else
-                                                                            <option value="{{ $company->id }}">
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @endif
-                                                                    @endforeach --}}
+                                                                            @foreach ($developers as $developer)
+                                                                                {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
+                                                                                @if (old('developer_id_one') == $developer->id)
+                                                                                    <option
+                                                                                        value="{{ $developer->first_name }} "
+                                                                                        selected>
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $developer->id }}">
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
 
                                                                         </select>
                                                                         @error('developer_id_one')
@@ -136,17 +140,20 @@
                                                                             <option value="not_selected">Not Selected
                                                                             </option>
 
-                                                                            {{-- @foreach ($companies as $company)
-                                                                        @if (old('developer_id_two') == $company->id)
-                                                                            <option value="{{ $company->id }}" selected>
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @else
-                                                                            <option value="{{ $company->id }}">
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @endif
-                                                                    @endforeach --}}
+                                                                            @foreach ($developers as $developer)
+                                                                                {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
+                                                                                @if (old('developer_id_one') == $developer->id)
+                                                                                    <option
+                                                                                        value="{{ $developer->first_name }} "
+                                                                                        selected>
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $developer->id }}">
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
 
                                                                         </select>
                                                                         @error('developer_id_two')
@@ -171,18 +178,20 @@
 
                                                                             <option value="not_selected">Not Selected
                                                                             </option>
-
-                                                                            {{-- @foreach ($companies as $company)
-                                                                        @if (old('developer_id_three') == $company->id)
-                                                                            <option value="{{ $company->id }}" selected>
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @else
-                                                                            <option value="{{ $company->id }}">
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @endif
-                                                                    @endforeach --}}
+                                                                            @foreach ($developers as $developer)
+                                                                                {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
+                                                                                @if (old('developer_id_one') == $developer->id)
+                                                                                    <option
+                                                                                        value="{{ $developer->first_name }} "
+                                                                                        selected>
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $developer->id }}">
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
 
                                                                         </select>
                                                                         @error('developer_id_three')
@@ -212,18 +221,20 @@
                                                                             <option value="not_selected">Not Selected
                                                                             </option>
 
-                                                                            {{-- @foreach ($companies as $company)
-                                                                        @if (old('tester_id_one') == $company->id)
-                                                                            <option value="{{ $company->id }}" selected>
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @else
-                                                                            <option value="{{ $company->id }}">
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @endif
-                                                                    @endforeach --}}
-
+                                                                            @foreach ($testers as $tester)
+                                                                                {{ $name = $tester->first_name . ' ' . $tester->last_name . ' (id: ' . $tester->id . ')' }}
+                                                                                @if (old('tester_id_one') == $tester->id)
+                                                                                    <option
+                                                                                        value="{{ $tester->first_name }} "
+                                                                                        selected>
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $tester->id }}">
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
                                                                         </select>
                                                                         @error('tester_id_one')
                                                                             <span class="invalid-feedback" role="alert">
@@ -245,18 +256,20 @@
                                                                             <option value="not_selected">Not Selected
                                                                             </option>
 
-                                                                            {{-- @foreach ($companies as $company)
-                                                                        @if (old('tester_id_two') == $company->id)
-                                                                            <option value="{{ $company->id }}" selected>
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @else
-                                                                            <option value="{{ $company->id }}">
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @endif
-                                                                    @endforeach --}}
-
+                                                                            @foreach ($testers as $tester)
+                                                                                {{ $name = $tester->first_name . ' ' . $tester->last_name . ' (id: ' . $tester->id . ')' }}
+                                                                                @if (old('tester_id_one') == $tester->id)
+                                                                                    <option
+                                                                                        value="{{ $tester->first_name }} "
+                                                                                        selected>
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $tester->id }}">
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
                                                                         </select>
                                                                         @error('tester_id_two')
                                                                             <span class="invalid-feedback" role="alert">
@@ -280,18 +293,20 @@
                                                                             <option value="not_selected">Not Selected
                                                                             </option>
 
-                                                                            {{-- @foreach ($companies as $company)
-                                                                        @if (old('tester_id_three') == $company->id)
-                                                                            <option value="{{ $company->id }}" selected>
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @else
-                                                                            <option value="{{ $company->id }}">
-                                                                                {{ $company->name }}
-                                                                            </option>
-                                                                        @endif
-                                                                    @endforeach --}}
-
+                                                                            @foreach ($testers as $tester)
+                                                                                {{ $name = $tester->first_name . ' ' . $tester->last_name . ' (id: ' . $tester->id . ')' }}
+                                                                                @if (old('tester_id_one') == $tester->id)
+                                                                                    <option
+                                                                                        value="{{ $tester->first_name }} "
+                                                                                        selected>
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $tester->id }}">
+                                                                                        {{ $name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
                                                                         </select>
                                                                         @error('tester_id_three')
                                                                             <span class="invalid-feedback" role="alert">
