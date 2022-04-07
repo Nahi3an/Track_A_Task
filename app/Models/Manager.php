@@ -31,4 +31,10 @@ class Manager extends Model
 
         return $this->belongsTo(Company::class);
     }
+
+    public function projects()
+    {
+
+        return $this->hasMany(Projects::class);
+    }
 }

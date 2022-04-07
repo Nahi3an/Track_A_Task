@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::table('projects', function (Blueprint $table) {
 
             $table->text('description');
-            // $table->unsignedBigInteger('team_id');
-            // $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->string('project_id');
+            // $table->unsignedBigInteger('manager_id');
+            // $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
         });
     }
 
@@ -31,9 +32,11 @@ return new class extends Migration
         Schema::table('projects', function (Blueprint $table) {
             //
             $table->dropColumn('description');
+            $table->dropColumn('project_id');
+
             // $table->dropForeign(['team_id']);
         });
     }
 };
 
-// C:\Apache24\htdocs\TracK_A_Task\
+// C:\Apache24\htdocs\TracK_A_Task\database\migrations\2022_04_03_192904_add_description_team_fk_to_projects.php

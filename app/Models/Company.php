@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class Company extends Model
 {
@@ -29,5 +30,11 @@ class Company extends Model
     {
 
         return $this->hasOne(Company_Admin::class);
+    }
+
+    public function projects()
+    {
+
+        return $this->hasMany(Projects::class);
     }
 }

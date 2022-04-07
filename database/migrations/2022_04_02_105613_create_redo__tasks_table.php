@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('redo_tasks', function (Blueprint $table) {
+        Schema::create('redo__tasks', function (Blueprint $table) {
             $table->id();
             $table->string('issue_tags');
             $table->text('problem_description');

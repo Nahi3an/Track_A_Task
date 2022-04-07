@@ -30,13 +30,13 @@ class RedirectIfAuthenticated
 
                 if ($role == '1') {
 
-                    return redirect()->route('manager');
+                    return redirect()->route('manager_dashboard');
                 } else if ($role == '2') {
 
-                    return redirect()->route('developer');
+                    return redirect()->route('developer_dashboard');
                 } else if ($role == '3') {
 
-                    return redirect()->route('tester');
+                    return redirect()->route('tester_dashboard');
                 }
             }
         }

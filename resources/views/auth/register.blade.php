@@ -133,13 +133,13 @@
                                         <option value="not_selected">Not Selected</option>
 
                                         @foreach ($roles as $role)
-                                            <@if (old('role') == $role->id)
+                                            @if (old('role') == $role->id)
                                                 <option value="{{ $role->id }}" selected>{{ $role->name }}
                                                 </option>
                                             @else
                                                 <option value="{{ $role->id }}">{{ $role->name }}
                                                 </option>
-                                        @endif
+                                            @endif
                                         @endforeach
 
                                     </select>

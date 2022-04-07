@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,12 +27,15 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'manager_role_access'], function () {
-        Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager');
+        Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_dashboard');
+
+        // Project: not in use index, create
+        Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
     });
     Route::group(['middleware' => 'developer_role_access'], function () {
-        Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer');
+        Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer_dashboard');
     });
     Route::group(['middleware' => 'tester_role_access'], function () {
-        Route::get('/tester', [App\Http\Controllers\TesterController::class, 'index'])->name('tester');
+        Route::get('/tester', [App\Http\Controllers\TesterController::class, 'index'])->name('tester_dashboard');
     });
 });
