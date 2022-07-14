@@ -64,7 +64,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <!-- Navbar Search -->
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                             <i class="fas fa-search"></i>
                         </a>
@@ -84,7 +84,7 @@
                                 </div>
                             </form>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <!-- Authentication Links -->
 
@@ -114,8 +114,7 @@
                                     {{ __('Logout') }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </div>
@@ -124,7 +123,7 @@
 
 
                     <!-- Messages Dropdown Menu -->
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-comments"></i>
                             <span class="badge badge-danger navbar-badge">20</span>
@@ -142,7 +141,8 @@
                                                     class="fas fa-star"></i></span>
                                         </h3>
                                         <p class="text-sm">Call me whenever you can...</p>
-                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago
+                                        </p>
                                     </div>
                                 </div>
                                 <!-- Message End -->
@@ -152,10 +152,10 @@
 
                             <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-bell"></i>
                             <span class="badge badge-warning navbar-badge">15</span>
@@ -175,7 +175,7 @@
 
                             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                         </div>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                             <i class="fas fa-expand-arrows-alt"></i>
@@ -298,7 +298,7 @@
         </aside>
 
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
 
@@ -344,7 +344,7 @@
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
+    {{-- <script src="dist/js/demo.js"></script> --}}
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard.js"></script>
 

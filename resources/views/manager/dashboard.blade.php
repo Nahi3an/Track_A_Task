@@ -3,59 +3,18 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Welcome {{ $manager->first_name . ' ' . $manager->last_name }}</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Manager Dashboard</a></li>
-                            <li class="breadcrumb-item active">Home</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+
 
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
-                <!-- Task Create -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <div class="inner">
-                                    <h3>{{ sizeof($manager->projects) }}</h3>
-                                    <p>Projects Created</p>
-                                    <button id="create_project_btn" type="button" class="btn btn-outline-dark"
-                                        data-toggle="modal" data-target="#exampleModal">Create Project <i
-                                            class="fas fa-plus-circle"></i>
-                                    </button>
-                                    <!-- Modal -->
-                                </div>
-                            </div>
 
-                            <div class="icon">
-                                <i class="icon ion-hammer"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row" id="project_form">
-                <div class="col-md-2">
-
-                </div>
-                <div class=" col-md-7 small-box bg-light p-3 m-5">
+                {{--  --}}
+                <div class=" col-md-7 small-box bg-light p-3 mx-3 mt-2">
                     <form method="POST" action="{{ route('project.store') }}">
                         @csrf
+                        <h5><b>Create a New Project</b></h5>
                         <input type="text" name="company_id" value="{{ $manager->company_id }}" hidden>
                         <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>
                         <input type="text" name="project_id" value="project#00{{ sizeof($projects) + 1 }} " hidden>
@@ -87,9 +46,9 @@
                             <div class="col-md">
                                 <label for="project_description">{{ __('Project Description') }}</label>
 
-                                <textarea id="project_description" type="text" class="form-control @error('project_description') is-invalid @enderror"
-                                    name="project_description" required autocomplete="project_description"
-                                    autofocus>{{ old('project_description') }}</textarea>
+                                <textarea id="project_description" type="text"
+                                    class="form-control @error('project_description') is-invalid @enderror" name="project_description" required
+                                    autocomplete="project_description" autofocus>{{ old('project_description') }}</textarea>
 
                                 @error('project_description')
                                     <span class="invalid-feedback" role="alert">
@@ -209,15 +168,87 @@
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-                            <button type="button" class="btn btn-danger me-md-2" data-dismiss="modal">Cancel</button>
+                            {{-- <button type="button" class="btn btn-danger me-md-2" data-dismiss="modal">Cancel</button> --}}
                             <button class="btn btn-success" type="submit">Create</button>
                         </div>
 
 
                     </form>
                 </div>
+                <div class="col-md-4 mt-2">
+
+                    <ul class="list-group ">
+                        <li class="list-group-item d-flex justify-content-between align-items-start ">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">
+                                    Created Projects
+                                </div>
+                                <a href="#">See more </a>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">{{ sizeof($manager->projects) }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">On Going Projects</div>
+                                <a href="#">See more </a>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Completed Projects</div>
+                                <a href="#">See more </a>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">14</span>
+                        </li>
+                    </ul>
+                    <h5 class="mt-2"><b>Recently Created Project</b></h5>
+
+                    <ul class="list-group ">
+                        @foreach ($latestProjects as $latestProject)
+                            <li class="list-group-item d-flex justify-content-between align-items-start ">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">
+                                        {{ $latestProject->title }}
+                                    </div>
+                                    <a href="#">See more </a>
+                                </div>
+                                <span class="badge bg-primary rounded-pill">{}</span>
+                            </li>
+                        @endforeach
+                        <li class="list-group-item d-flex justify-content-between align-items-start ">
+                            <a href="#">See All Projects</a>
+                        </li>
+
+                    </ul>
+
+                </div>
             </div>
-            <div class="row">
+            {{-- <div class="container-fluid">
+                <!-- Task Create -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <div class="inner">
+                                    <h3>{{ sizeof($manager->projects) }}</h3>
+                                    <p>Projects Created</p>
+                                    <button id="create_project_btn" type="button" class="btn btn-outline-dark">Create
+                                        Project <i class="fas fa-plus-circle"></i>
+                                    </button>
+                                    <!-- Modal -->
+                                </div>
+                            </div>
+
+                            <div class="icon">
+                                <i class="icon ion-hammer"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-info">
@@ -244,7 +275,8 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -259,7 +291,8 @@
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -278,7 +311,7 @@
                     </div>
                 </div>
                 <!-- ./col -->
-            </div>
+            </div> --}}
             <!-- /.row -->
 
     </div><!-- /.container-fluid -->
@@ -286,7 +319,5 @@
     <!-- /.content -->
     </div>
 
-    <script>
-
-    </script>
+    <script></script>
 @endsection
