@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'manager_role_access'], function () {
         Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_dashboard');
-
+        Route::get('/manager/task', [TaskController::class, 'index'])->name('task_dashboard');
         // Project: not in use index, create
         Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
     });

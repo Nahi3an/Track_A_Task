@@ -1,59 +1,103 @@
 @extends('manager.layouts.app')
-
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-
-
-        <!-- Main content -->
         <section class="content">
 
-            <div class="row" id="project_form">
+            <div class="row" id="task_form">
                 {{--  --}}
                 <div class=" col-md-7 small-box bg-light p-3 mx-3 mt-2">
-                    <form method="POST" action="{{ route('project.store') }}">
+                    <form method="POST" action="">
                         @csrf
-                        <h5><b>Create a New Project</b></h5>
-                        <input type="text" name="company_id" value="{{ $manager->company_id }}" hidden>
-                        <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>
-                        <input type="text" name="project_id" value="project#00{{ sizeof($projects) + 1 }} " hidden>
 
 
-                        <div class="row mb-3">
+                        <h5><b>Assign Task</b></h5>
+                        <div class="row mb-2">
+                            <div class="col">
+                                {{-- <input type="text" name="company_id" value="{{ $manager->company_id }}" hidden>
+                                <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>
+                                <input type="text" name="project_id" value="project#00{{ sizeof($projects) + 1 }} " hidden> --}}
+                                <label for="project_id" class="text-md-end">{{ __('Project Id') }}</label>
+                                <input type="text" name="project_id" class="form-control"
+                                    value="{{ $projectInfo['id'] }}" disabled>
+                            </div>
+                            <div class="col">
+                                <label for="project_id" class="text-md-end">{{ __('Project Title') }}</label>
+                                <input type="text" name="project_title" class="form-control"
+                                    value="{{ $projectInfo['title'] }}" disabled>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row mb-2">
 
                             <div class="col-md">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="task_id" class="text-md-end">{{ __('Task Id') }}</label>
+                                        <input id="task_id" type="text" class="form-control"
+                                            value="task#00{{ $taskCount + 1 }}" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <label for="task_title" class="text-md-end">{{ __('Task Title') }}</label>
 
-                                <label for="project_id" class="text-md-end">{{ __('Project Id') }}</label>
-                                <input id="project_id" type="text" class="form-control"
-                                    value="project#00{{ sizeof($projects) + 1 }}" disabled>
+                                        <input id="task_title" type="text"
+                                            class="form-control @error('task_title') is-invalid @enderror" name="task_title"
+                                            value="{{ old('task_title') }}" required autocomplete="task_title" autofocus>
 
-                                <label for="project_title" class="text-md-end">{{ __('Project Title') }}</label>
+                                        @error('task_title')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                                <input id="project_title" type="text"
-                                    class="form-control @error('project_title') is-invalid @enderror" name="project_title"
-                                    value="{{ old('project_title') }}" required autocomplete="project_title" autofocus>
-
-                                @error('project_title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
-                        <div class="row mb-3">
 
-                            <div class="col-md">
-                                <label for="project_description">{{ __('Project Description') }}</label>
+                        <div class="row mb-2">
+                            <div class="col-md-8">
+                                <div class="col-md">
+                                    <label for="task_description">{{ __('Task Description') }}</label>
 
-                                <textarea id="project_description" type="text"
-                                    class="form-control @error('project_description') is-invalid @enderror" name="project_description" required
-                                    autocomplete="project_description" autofocus>{{ old('project_description') }}</textarea>
+                                    <textarea id="task_description" type="text" class="form-control @error('task_description') is-invalid @enderror"
+                                        name="task_description" required autocomplete="task_description" autofocus>{{ old('task_description') }}</textarea>
 
-                                @error('project_description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                    @error('task_description')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="task_type" class="col-form-label text-md-end">{{ __('Task Type ') }}</label>
+                                <select id="task_type" type="text"
+                                    class="form-control @error('task_type') is-invalid @enderror" name="task_type"
+                                    value="{{ old('task_type') }}" required autocomplete="task_type" autofocus">
+                                    <option value="not_selected">Not Selected</option>
+                                    @foreach ($taskTypes as $type)
+                                        @if (old('task_type') == $type['id'])
+                                            <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                {{-- @error('country')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror --}}
+
+                            </div>
+
+                            <div class="col-md-8">
                             </div>
                         </div>
 
@@ -61,7 +105,7 @@
                             {{-- Devlopers --}}
                             <div class="col-md-6">
 
-                                @foreach (range(0, 2) as $x)
+                                {{-- @foreach (range(0, 2) as $x)
                                     <div class="row mb-2">
 
                                         <div class="col-md  {{ $errors->has('developers.' . $x) }}">
@@ -74,13 +118,7 @@
                                                 <option value="not_selected">Not Selected
 
                                                 </option>
-                                                {{-- @if (old('role') == $role->id)
-                                                    <option value="{{ $role->id }}" selected>{{ $role->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $role->id }}">{{ $role->name }}
-                                                    </option>
-                                                @endif --}}
+
 
                                                 @foreach ($developers as $developer)
                                                     {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
@@ -103,13 +141,12 @@
                                             @endif
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
 
                             </div>
                             {{-- Testers --}}
                             <div class="col-md-6">
-
-                                @foreach (range(0, 2) as $x)
+                                {{-- @foreach (range(0, 2) as $x)
                                     <div class="row mb-2">
 
                                         <div class="col-md  {{ $errors->has('testers.' . $x) }}">
@@ -143,14 +180,14 @@
                                             @endif
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
 
                             </div>
 
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-2">
                             <label for="deadline"
-                                class="col-md-4 col-form-label text-md-end">{{ __('Project Deadline') }}</label>
+                                class="col-md-4 col-form-label text-md-end">{{ __('Task Deadline') }}</label>
 
                             <div class="col-md-6">
                                 <input id="deadline" type="date"
@@ -180,22 +217,22 @@
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">
-                                    Created Projects
+                                    Total Task Assigned
                                 </div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">{{ sizeof($manager->projects) }}</span>
+                            <span class="badge bg-primary rounded-pill">{{ $taskCount }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">On Going Projects</div>
+                                <div class="fw-bold">On Going Task</div>
                                 <a href="#">See more </a>
                             </div>
                             <span class="badge bg-primary rounded-pill">14</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">Completed Projects</div>
+                                <div class="fw-bold">Completed Task</div>
                                 <a href="#">See more </a>
                             </div>
                             <span class="badge bg-primary rounded-pill">14</span>
@@ -203,7 +240,7 @@
                     </ul>
                     <h5 class="mt-2"><b>Recently Created Project</b></h5>
 
-                    <ul class="list-group ">
+                    {{-- <ul class="list-group ">
                         @foreach ($latestProjects as $latestProject)
                             <li class="list-group-item d-flex justify-content-between align-items-start ">
                                 <div class="ms-2 me-auto">
@@ -216,107 +253,16 @@
                             </li>
                         @endforeach
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
-                            <a href="#">See All Projects</a>
+                            <a href="#">See All Tasks</a>
                         </li>
 
-                    </ul>
+                    </ul> --}}
 
                 </div>
             </div>
-            {{-- <div class="container-fluid">
-                <!-- Task Create -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <div class="inner">
-                                    <h3>{{ sizeof($manager->projects) }}</h3>
-                                    <p>Projects Created</p>
-                                    <button id="create_project_btn" type="button" class="btn btn-outline-dark">Create
-                                        Project <i class="fas fa-plus-circle"></i>
-                                    </button>
-                                    <!-- Modal -->
-                                </div>
-                            </div>
 
-                            <div class="icon">
-                                <i class="icon ion-hammer"></i>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-plus-circle"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-circle-plus"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div> --}}
-            <!-- /.row -->
         </section>
-    </div><!-- /.container-fluid -->
 
-    <!-- /.content -->
     </div>
-
-    <script></script>
 @endsection

@@ -50,6 +50,7 @@ class ProjectController extends Controller
 
         // Getting the project id generated on the UI
         $project_id = $request->input('project_id');
+        $manager_id = $request->input('manager_id');
 
         $project = Projects::create([
 
@@ -64,7 +65,10 @@ class ProjectController extends Controller
         //with generated project id getting the information of project as array
         $created_project_info = Projects::where('project_id', $project_id)->get()->toArray();
 
-        //Pussing the developers & tester ids into the arrray to pass it to the TeamsController
+        //All Project info to send In task UI
+        $project_info = $created_project_info[0];
+
+        //Passing the developers & tester ids into the arrray to pass it to the TeamsController
         array_push($created_project_info, $request->input('developers'), $request->input('testers'));
 
         // Creating a request object to pass all the project information to the store method of Teams controller
@@ -75,12 +79,12 @@ class ProjectController extends Controller
         $team = new TeamsController();
         $team->store($request);
 
-        return redirect()->route('manager_dashboard');
+        return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
 
 
     /**
-     * Display the specified resource.
+     * Display the specified resource
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -89,6 +93,7 @@ class ProjectController extends Controller
     {
         //
     }
+
 
     /**
      * Show the form for editing the specified resource.

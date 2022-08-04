@@ -17,7 +17,6 @@ class ManagerController extends Controller
         $user_id = auth()->user()->id;
         $manager = Manager::where('user_id', $user_id)->get()->first();
         $latestProjects = Projects::where('manager_id', $manager->id)->orderBy('id', 'DESC')->limit(3)->get();
-        //dd($latestProjects);
         $company_id = $manager->company_id;
         $developers = Developer::where('company_id', $company_id)->get();
         $testers = Tester::where('company_id', $company_id)->get();
