@@ -5,23 +5,23 @@
 
             <div class="row" id="task_form">
                 {{--  --}}
-                <div class=" col-md-7 small-box bg-light p-3 mx-3 mt-2">
-                    <form method="POST" action="">
+                <div class=" col-md-7 small-box bg-light p-3 mx-3 mt-2" style="width: 63%;">
+                    <form method="POST" action="{{ route('task.create') }}">
                         @csrf
-
 
                         <h5><b>Assign Task</b></h5>
                         <div class="row mb-2">
                             <div class="col">
-                                {{-- <input type="text" name="company_id" value="{{ $manager->company_id }}" hidden>
-                                <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>
-                                <input type="text" name="project_id" value="project#00{{ sizeof($projects) + 1 }} " hidden> --}}
-                                <label for="project_id" class="text-md-end">{{ __('Project Id') }}</label>
-                                <input type="text" name="project_id" class="form-control"
-                                    value="{{ $projectInfo['id'] }}" disabled>
+
+                                <input type="text" name="manager_id" value="{{ $managerId }}" hidden>
+                                <input type="text" name="project_id" value="{{ $projectInfo['id'] }}" hidden>
+
+                                <label class="text-md-end">{{ __('Project Id') }}</label>
+                                <input type="text" class="form-control" value="{{ $projectInfo['project_id'] }}"
+                                    disabled>
                             </div>
                             <div class="col">
-                                <label for="project_id" class="text-md-end">{{ __('Project Title') }}</label>
+                                <label for="project_title" class="text-md-end">{{ __('Project Title') }}</label>
                                 <input type="text" name="project_title" class="form-control"
                                     value="{{ $projectInfo['title'] }}" disabled>
                             </div>
@@ -44,7 +44,7 @@
 
                                         <input id="task_title" type="text"
                                             class="form-control @error('task_title') is-invalid @enderror" name="task_title"
-                                            value="{{ old('task_title') }}" required autocomplete="task_title" autofocus>
+                                            value="{{ old('task_title') }}" autocomplete="task_title" autofocus>
 
                                         @error('task_title')
                                             <span class="invalid-feedback" role="alert">
@@ -57,13 +57,13 @@
                             </div>
                         </div>
 
-                        <div class="row mb-2">
-                            <div class="col-md-8">
+                        <div class="row ">
+                            <div class="col-md-12">
                                 <div class="col-md">
                                     <label for="task_description">{{ __('Task Description') }}</label>
 
                                     <textarea id="task_description" type="text" class="form-control @error('task_description') is-invalid @enderror"
-                                        name="task_description" required autocomplete="task_description" autofocus>{{ old('task_description') }}</textarea>
+                                        name="task_description" autocomplete="task_description" autofocus>{{ old('task_description') }}</textarea>
 
                                     @error('task_description')
                                         <span class="invalid-feedback" role="alert">
@@ -73,134 +73,135 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-4">
-                                <label for="task_type" class="col-form-label text-md-end">{{ __('Task Type ') }}</label>
-                                <select id="task_type" type="text"
-                                    class="form-control @error('task_type') is-invalid @enderror" name="task_type"
-                                    value="{{ old('task_type') }}" required autocomplete="task_type" autofocus">
-                                    <option value="not_selected">Not Selected</option>
-                                    @foreach ($taskTypes as $type)
-                                        @if (old('task_type') == $type['id'])
-                                            <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
-                                            </option>
-                                        @else
-                                            <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                {{-- @error('country')
+                            <div class="row mt-2">
+                                <div class="col-md-5">
+                                    <label for="task_type" class="form-label">{{ __('Task Type ') }}</label>
+                                    <select id="taskType" type="text"
+                                        class="form-control  @error('task_type') is-invalid @enderror" name="task_type"
+                                        value="{{ old('task_type') }}">
+                                        <option value="not_selected">Not Selected</option>
+
+                                        @foreach ($taskTypes as $type)
+                                            @if (old('task_type') == $type['id'])
+                                                <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $type['id'] }}">{{ $type['task_type'] }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+
+
+                                    @error('task_type')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror --}}
+                                    @enderror
+
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <label for="deadline" class="form-label">{{ __('Task Deadline') }}</label>
+
+
+                                    <input id="deadline" type="date"
+                                        class="form-control @error('dead_line') is-invalid @enderror" name="dead_line"
+                                        value="{{ old('dead_line') }}" autofocus>
+
+                                    @error('dead_line')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+
+
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="task_tag" class="form-label">{{ __('Task Tag ') }}</label>
+                                    <input id="taskTag" type="text" name="task_tag"
+                                        class="form-control @error('task_tag') is-invalid @enderror"
+                                        value="{{ old('task_tag') }}" autofocus>
+
+                                    @error('task_tag')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+
+                                </div>
 
                             </div>
 
-                            <div class="col-md-8">
-                            </div>
+
                         </div>
-
-                        <div class="row">
+                        <div class="row mb-2" id="developersTestersList">
                             {{-- Devlopers --}}
                             <div class="col-md-6">
+                                <div id="developersList">
+                                    <label for="developer" class="col-form-label text-md-end">Assign Developers</label>
+                                    <select id="developer" type="text" value="{{ old('developer') }}"
+                                        class="form-control @error('developer') is-invalid @enderror" name="developer">
+                                        <option value="not_selected">Not Selected
 
-                                {{-- @foreach (range(0, 2) as $x)
-                                    <div class="row mb-2">
+                                        </option>
+                                        @foreach ($developers as $developer)
+                                            {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
 
-                                        <div class="col-md  {{ $errors->has('developers.' . $x) }}">
-                                            <label for="develope_{{ $x }}" class="form-label">Developer
-                                                {{ $x + 1 }}</label><br>
-
-                                            <select id="develope_{{ $x }}" type="text" class="form-control"
-                                                style="color: black" name="developers[]">
-
-                                                <option value="not_selected">Not Selected
-
+                                            @if (old('developer') == $developer->id)
+                                                <option value="{{ $developer->id }}" selected>{{ $name }}
                                                 </option>
-
-
-                                                @foreach ($developers as $developer)
-                                                    {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
-                                                    @if (old('developers.' . $x) == $developer->id)
-                                                        <option value="{{ $developer->id }}" selected>
-                                                            {{ $name }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $developer->id }}">
-                                                            {{ $name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-
-                                            </select>
-                                            @if ($errors->has('developers.' . $x))
-                                                <span class="help-block text-danger">
-                                                    <strong> {{ $errors->first('developers.' . $x) }}</strong>
-                                                </span>
+                                            @else
+                                                <option value="{{ $developer->id }}">{{ $name }}
+                                                </option>
                                             @endif
-                                        </div>
-                                    </div>
-                                @endforeach --}}
+                                        @endforeach
+                                    </select>
+
+                                    @error('developer')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
 
                             </div>
                             {{-- Testers --}}
                             <div class="col-md-6">
-                                {{-- @foreach (range(0, 2) as $x)
-                                    <div class="row mb-2">
+                                <div id="testersList">
+                                    <label for="tester" class="col-form-label text-md-end">Assign Testers</label>
+                                    <select id="tester" type="text"
+                                        class="form-control @error('tester') is-invalid @enderror" name="tester"
+                                        value={{ old('tester') }}>
+                                        <option value="not_selected">Not Selected
 
-                                        <div class="col-md  {{ $errors->has('testers.' . $x) }}">
-                                            <label for="tester_{{ $x }}" class="form-label">Tester
-                                                {{ $x + 1 }}</label><br>
-
-                                            <select id="tester_{{ $x }}" type="text" class="form-control"
-                                                style="color: black" name="testers[]">
-
-                                                <option value="not_selected">Not Selected
-
-                                                </option>
-
-                                                @foreach ($testers as $tester)
-                                                    {{ $name = $tester->first_name . ' ' . $tester->last_name . ' (id: ' . $tester->id . ')' }}
-                                                    @if (old('testers.' . $x) == $tester->id)
-                                                        <option value="{{ $tester->id }}" selected> {{ $name }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $tester->id }}">
-                                                            {{ $name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-
-                                            </select>
-                                            @if ($errors->has('testers.' . $x))
-                                                <span class="help-block text-danger">
-                                                    <strong> {{ $errors->first('testers.' . $x) }}</strong>
-                                                </span>
+                                        </option>
+                                        @foreach ($testers as $tester)
+                                            {{ $name = $tester->first_name . ' ' . $tester->last_name . ' (id: ' . $tester->id . ')' }}
+                                            @if (old('tester') == $tester->id)
+                                                <option value="{{ $tester->id }}" selected>{{ $name }}</option>
+                                            @else
+                                                <option value="{{ $tester->id }}">{{ $name }}</option>
                                             @endif
-                                        </div>
-                                    </div>
-                                @endforeach --}}
+                                        @endforeach
+
+                                    </select>
+                                    @error('tester')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+
+                                </div>
 
                             </div>
 
                         </div>
-                        <div class="row mb-2">
-                            <label for="deadline"
-                                class="col-md-4 col-form-label text-md-end">{{ __('Task Deadline') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="deadline" type="date"
-                                    class="form-control @error('deadline') is-invalid @enderror" name="deadline"
-                                    value="{{ old('deadline') }}" required autocomplete="deadline" autofocus>
 
-                                @error('deadline')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
@@ -238,7 +239,7 @@
                             <span class="badge bg-primary rounded-pill">14</span>
                         </li>
                     </ul>
-                    <h5 class="mt-2"><b>Recently Created Project</b></h5>
+                    <h5 class="mt-2"><b>Recently Assigned Task</b></h5>
 
                     {{-- <ul class="list-group ">
                         @foreach ($latestProjects as $latestProject)
@@ -265,4 +266,35 @@
         </section>
 
     </div>
+    <script>
+        const el = document.getElementById('taskType');
+
+        const developersList = document.getElementById('developersList');
+        const testersList = document.getElementById('testersList');
+
+        //developersTestersList
+
+
+        el.addEventListener('change', function handleChange(event) {
+            if (event.target.value === 'not_selected' || event.target.value === '1') {
+                developersList.style.display = 'block';
+                testersList.style.display = 'block';
+
+
+
+            } else if (event.target.value === '2') {
+                //developersList.style.display = 'block';
+                //testersList.style.display = 'none';
+                //developersList.value = 0;
+                console.log(developersList.value)
+
+
+            } else if (event.target.value === '3') {
+                // developersList.style.display = 'none';
+                //testersList.style.display = 'block';
+                console.log(developersList.value)
+            }
+
+        });
+    </script>
 @endsection

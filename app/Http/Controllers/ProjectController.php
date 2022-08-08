@@ -82,6 +82,14 @@ class ProjectController extends Controller
         return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
 
+    public function addTaskToOldProject(Request $request)
+    {
+        $manager_id = $request->manager_id;
+        $selected_project_info = Projects::where('id', $request->selected_project)->get()->toArray();
+        # dd($selected_project_info);
+        $project_info = $selected_project_info[0];
+        return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
+    }
 
     /**
      * Display the specified resource

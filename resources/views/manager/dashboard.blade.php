@@ -8,7 +8,7 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="row" id="project_form">
+            <div class="row container-fluid" id="project_form">
                 {{--  --}}
                 <div class=" col-md-7 small-box bg-light p-3 mx-3 mt-2">
                     <form method="POST" action="{{ route('project.store') }}">
@@ -223,30 +223,35 @@
 
                 </div>
             </div>
-            {{-- <div class="container-fluid">
-                <!-- Task Create -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <div class="inner">
-                                    <h3>{{ sizeof($manager->projects) }}</h3>
-                                    <p>Projects Created</p>
-                                    <button id="create_project_btn" type="button" class="btn btn-outline-dark">Create
-                                        Project <i class="fas fa-plus-circle"></i>
-                                    </button>
-                                    <!-- Modal -->
-                                </div>
-                            </div>
 
-                            <div class="icon">
-                                <i class="icon ion-hammer"></i>
-                            </div>
+            <!-- Task Create -->
+            <div class="row container-fluid">
+                <div class="col-md-7">
+                    <form method="POST" action={{ route('project.addTaskToOldProject') }}>
+                        @csrf
+                        <h5><b>Add Task To Project</b></h5>
+                        <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>
+                        <label for="project" class="form-label">Select Project ID
+                        </label><br>
 
-                        </div>
-                    </div>
+                        <select id="selected_project" type="text" class="form-control" name="selected_project">
+                            <option value="not_selected">Not Selected</option>
+
+
+                            </option>
+                            @foreach ($projects as $project)
+                                <option value="{{ $project->id }}">{{ $project->project_id }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                        <button class="btn btn-success mt-2" type="submit">Add Task</button>
+                    </form>
+
+
                 </div>
-            </div> --}}
+            </div>
+
             {{-- <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->

@@ -30,8 +30,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'manager_role_access'], function () {
         Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_dashboard');
         Route::get('/manager/task', [TaskController::class, 'index'])->name('task_dashboard');
-        // Project: not in use index, create
+
+        // Project
         Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
+        Route::post('/project/task', [ProjectController::class, 'addTaskToOldProject'])->name('project.addTaskToOldProject');
+
+        //Task
+        Route::post('/manager/task/add', [TaskController::class, 'create'])->name('task.create');
     });
     Route::group(['middleware' => 'developer_role_access'], function () {
         Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer_dashboard');

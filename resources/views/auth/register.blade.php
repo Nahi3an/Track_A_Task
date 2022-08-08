@@ -49,8 +49,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('User Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text"
+                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -127,8 +128,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Role') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="role" type="text" class="form-control @error('role') is-invalid @enderror"
-                                        name="role" value="{{ old('role') }}" required autocomplete="role" autofocus">
+                                    <select id="role" type="text"
+                                        class="form-control @error('role') is-invalid @enderror" name="role"
+                                        value="{{ old('role') }}" required autocomplete="role" autofocus">
 
                                         <option value="not_selected">Not Selected</option>
 
@@ -158,8 +160,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Email') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    <input id="email" type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -210,8 +213,7 @@
 
                                 <div class="col-md-6">
                                     <textarea id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address"
-                                        value="{{ old('address') }}" required
-                                        autocomplete="address">{{ old('address') }} </textarea>
+                                        value="{{ old('address') }}" required autocomplete="address">{{ old('address') }} </textarea>
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">

@@ -6,6 +6,7 @@ use App\Models\Developer;
 use App\Models\Task;
 use App\Models\Task_Type;
 use App\Models\Tester;
+use App\Rules\ValidateSelectField;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -24,28 +25,39 @@ class TaskController extends Controller
     {
 
 
-        $manager_id = $request->manager_id;
+        $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
-
         $taskInfo = Task::where('project_id', $projectInfo['id'])->get();
         $taskCount = count($taskInfo);
-        $developers = Developer::where('company_id', $projectInfo['company_id'])->get()->toArray();
-        $testers = Tester::where('company_id', $projectInfo['company_id'])->get()->toArray();
-        //  dd($testers);
-        $taskTypes = Task_Type::get()->toArray();
-        //  dd($taskTypes[0]['id']);
+        $developers = Developer::where('company_id', $projectInfo['company_id'])->get();
+        $testers = Tester::where('company_id', $projectInfo['company_id'])->get();
+        $taskTypes = Task_Type::where('task_type', '!=', 'personal')->get()->toArray();
 
 
-        return view('manager.task_dashboard', compact(['manager_id', 'projectInfo', 'taskInfo', 'taskCount', 'testers', 'developers', 'taskTypes']));
+
+        return view('manager.task_dashboard', compact(['managerId', 'projectInfo', 'taskInfo', 'taskCount', 'testers', 'developers', 'taskTypes']));
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+
+        $request->validate([
+            'task_title' => ['required', 'string', 'min:5', 'max:20'],
+            'task_description' => ['required', 'string', 'min:15', 'max:255'],
+            'task_type' => ['required', new ValidateSelectField()],
+            'dead_line' => ['required'],
+            'task_tag' => ['required', 'starts_with:#'],
+            'developer' => ['required', new ValidateSelectField()],
+            'tester' => ['required', new ValidateSelectField()],
+
+
+        ]);
+        dd($request);
     }
 
     /**
