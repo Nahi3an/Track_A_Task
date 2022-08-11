@@ -6,6 +6,7 @@ use App\Models\Developer;
 use App\Models\Task;
 use App\Models\Task_Type;
 use App\Models\Tester;
+use App\Rules\DevTesterValidationBasedOnTaskType;
 use App\Rules\ValidateSelectField;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,16 @@ class TaskController extends Controller
      */
     public function create(Request $request)
     {
+        $conditionDev =  ['required', new ValidateSelectField()];
+        $conditionTester =  ['required', new ValidateSelectField()];
+
+        if ($request->task_type == '2') {
+            $conditionTester =  [new DevTesterValidationBasedOnTaskType()];
+        } elseif ($request->task_type == '3') {
+
+            $conditionDev = [new DevTesterValidationBasedOnTaskType()];
+        }
+
 
 
         $request->validate([
@@ -52,12 +63,30 @@ class TaskController extends Controller
             'task_type' => ['required', new ValidateSelectField()],
             'dead_line' => ['required'],
             'task_tag' => ['required', 'starts_with:#'],
-            'developer' => ['required', new ValidateSelectField()],
-            'tester' => ['required', new ValidateSelectField()],
+            'developer' => $conditionDev,
+            'tester' => $conditionTester
 
 
         ]);
-        dd($request);
+
+        $data = $request->all();
+
+
+        if ($data['task_type'] == '2') {
+
+            $data['tester'] = 'not_assigned';
+        } else if ($data['task_type'] == '3') {
+            $data['developer'] = 'not_assigned';
+        }
+
+        // dd($data);
+        // User::create([
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        //     'role' => ''
+        // ]);
+        Task::create();
     }
 
     /**

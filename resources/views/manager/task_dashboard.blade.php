@@ -139,9 +139,10 @@
                         </div>
                         <div class="row mb-2" id="developersTestersList">
                             {{-- Devlopers --}}
-                            <div class="col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div id="developersList">
-                                    <label for="developer" class="col-form-label text-md-end">Assign Developers</label>
+                                    <label for="developer" style="margin-bottom: 0px;">Assign Developers</label> <br>
+                                    <small><b>(**Mark Not Selected for Task Type: Testing)</b></small>
                                     <select id="developer" type="text" value="{{ old('developer') }}"
                                         class="form-control @error('developer') is-invalid @enderror" name="developer">
                                         <option value="not_selected">Not Selected
@@ -170,9 +171,10 @@
 
                             </div>
                             {{-- Testers --}}
-                            <div class="col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div id="testersList">
-                                    <label for="tester" class="col-form-label text-md-end">Assign Testers</label>
+                                    <label for="Tester" style="margin-bottom: 0px;">Assign Testers</label> <br>
+                                    <small><b>(**Mark Not Selected for Task Type: Development)</b></small>
                                     <select id="tester" type="text"
                                         class="form-control @error('tester') is-invalid @enderror" name="tester"
                                         value={{ old('tester') }}>
@@ -267,34 +269,37 @@
 
     </div>
     <script>
-        const el = document.getElementById('taskType');
+        // const el = document.getElementById('taskType');
 
-        const developersList = document.getElementById('developersList');
-        const testersList = document.getElementById('testersList');
+        // const developersList = document.getElementById('developersList');
+        // const testersList = document.getElementById('testersList');
 
-        //developersTestersList
+        // //developersTestersList
+        // developersList.addEventListener('load'function onLoad() {
 
+        //     console.log(developersList.value);
+        // })
 
-        el.addEventListener('change', function handleChange(event) {
-            if (event.target.value === 'not_selected' || event.target.value === '1') {
-                developersList.style.display = 'block';
-                testersList.style.display = 'block';
-
-
-
-            } else if (event.target.value === '2') {
-                //developersList.style.display = 'block';
-                //testersList.style.display = 'none';
-                //developersList.value = 0;
-                console.log(developersList.value)
+        // el.addEventListener('change', function handleChange(event) {
+        //     if (event.target.value === 'not_selected' || event.target.value === '1') {
+        //         developersList.style.display = 'block';
+        //         testersList.style.display = 'block';
 
 
-            } else if (event.target.value === '3') {
-                // developersList.style.display = 'none';
-                //testersList.style.display = 'block';
-                console.log(developersList.value)
-            }
 
-        });
+        //     } else if (event.target.value === '2') {
+        //         developersList.style.display = 'block';
+        //         testersList.style.display = 'none';
+        //         // //developersList.value = 0;
+        //         // console.log(developersList.value)
+
+
+        //     } else if (event.target.value === '3') {
+        //         developersList.style.display = 'none';
+        //         testersList.style.display = 'block';
+        //         //  console.log(developersList.value)
+        //     }
+
+        // });
     </script>
 @endsection
