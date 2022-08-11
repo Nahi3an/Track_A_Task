@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->unsignedBigInteger('task_type');
+            //
+            $table->string('task_id');
         });
     }
 
@@ -26,7 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('task_type');
+            //
+            $table->dropColumn('task__id');
         });
     }
 };

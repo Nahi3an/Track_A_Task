@@ -14,7 +14,11 @@
                             <div class="col">
 
                                 <input type="text" name="manager_id" value="{{ $managerId }}" hidden>
+                                <input type="text" name="company_id" value="{{ $projectInfo['company_id'] }}" hidden>
                                 <input type="text" name="project_id" value="{{ $projectInfo['id'] }}" hidden>
+                                <input type="text" class="form-control" name="task_id"
+                                    value="task#00{{ $taskCount + 1 }}" hidden>
+
 
                                 <label class="text-md-end">{{ __('Project Id') }}</label>
                                 <input type="text" class="form-control" value="{{ $projectInfo['project_id'] }}"
@@ -35,8 +39,8 @@
                             <div class="col-md">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="task_id" class="text-md-end">{{ __('Task Id') }}</label>
-                                        <input id="task_id" type="text" class="form-control"
+                                        <label for="taskId" class="text-md-end">{{ __('Task Id') }}</label>
+                                        <input id="taskId" type="text" class="form-control"
                                             value="task#00{{ $taskCount + 1 }}" disabled>
                                     </div>
                                     <div class="col">
@@ -143,15 +147,16 @@
                                 <div id="developersList">
                                     <label for="developer" style="margin-bottom: 0px;">Assign Developers</label> <br>
                                     <small><b>(**Mark Not Selected for Task Type: Testing)</b></small>
-                                    <select id="developer" type="text" value="{{ old('developer') }}"
-                                        class="form-control @error('developer') is-invalid @enderror" name="developer">
+                                    <select id="developer" type="text" value="{{ old('developer_id') }}"
+                                        class="form-control @error('developer_id') is-invalid @enderror"
+                                        name="developer_id">
                                         <option value="not_selected">Not Selected
 
                                         </option>
                                         @foreach ($developers as $developer)
                                             {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
 
-                                            @if (old('developer') == $developer->id)
+                                            @if (old('developer_id') == $developer->id)
                                                 <option value="{{ $developer->id }}" selected>{{ $name }}
                                                 </option>
                                             @else
@@ -161,7 +166,7 @@
                                         @endforeach
                                     </select>
 
-                                    @error('developer')
+                                    @error('developer_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -176,14 +181,14 @@
                                     <label for="Tester" style="margin-bottom: 0px;">Assign Testers</label> <br>
                                     <small><b>(**Mark Not Selected for Task Type: Development)</b></small>
                                     <select id="tester" type="text"
-                                        class="form-control @error('tester') is-invalid @enderror" name="tester"
-                                        value={{ old('tester') }}>
+                                        class="form-control @error('tester_id') is-invalid @enderror" name="tester_id"
+                                        value={{ old('tester_id') }}>
                                         <option value="not_selected">Not Selected
 
                                         </option>
                                         @foreach ($testers as $tester)
                                             {{ $name = $tester->first_name . ' ' . $tester->last_name . ' (id: ' . $tester->id . ')' }}
-                                            @if (old('tester') == $tester->id)
+                                            @if (old('tester_id') == $tester->id)
                                                 <option value="{{ $tester->id }}" selected>{{ $name }}</option>
                                             @else
                                                 <option value="{{ $tester->id }}">{{ $name }}</option>
@@ -191,7 +196,7 @@
                                         @endforeach
 
                                     </select>
-                                    @error('tester')
+                                    @error('tester_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

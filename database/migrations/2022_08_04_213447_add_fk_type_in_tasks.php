@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('type')->index()->change();
-            $table->foreign('type')
+            $table->unsignedBigInteger('task_type')->index()->change();
+            $table->foreign('task_type')
                 ->references('id')
                 ->on('task_types')
                 ->onDelete('cascade');
@@ -32,8 +32,8 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
 
-            $table->dropForeign('tasks_type_foreign');
-            $table->dropColumn('type');
+            $table->dropForeign('tasks_task_type_foreign');
+            $table->dropColumn('task_type');
         });
     }
 };

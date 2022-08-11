@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('redo__tasks', function (Blueprint $table) {
+        Schema::create('redo_tasks', function (Blueprint $table) {
             $table->id();
             $table->string('issue_tags');
             $table->text('problem_description');
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('redo__tasks');
+        Schema::dropIfExists('redo_tasks');
     }
 };
