@@ -59,7 +59,8 @@ class ProjectController extends Controller
             'company_id' => $request->input('company_id'),
             'description' => $request->input('project_description'),
             'manager_id' => $request->input('manager_id'),
-            'project_id' => $request->input('project_id')
+            'project_id' => $request->input('project_id'),
+            'status' => 0
         ]);
 
         //with generated project id getting the information of project as array

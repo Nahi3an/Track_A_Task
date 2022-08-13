@@ -231,40 +231,60 @@
                             </div>
                             <span class="badge bg-primary rounded-pill">{{ $taskCount }}</span>
                         </li>
+
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">On Going Task</div>
+                                <div class="fw-bold">Development & Testing Related Task</div>
                                 <a href="#">See more </a>
+
+
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="badge bg-primary rounded-pill"
+                                style="margin-left: 1px;">{{ $devTestTaskCount }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">Completed Task</div>
+                                <div class="fw-bold">Only Development Reated Task</div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="badge bg-primary rounded-pill">{{ $devTaskCount }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Only Testing Reated Task</div>
+                                <a href="#">See more </a>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">{{ $testTaskCount }}</span>
                         </li>
                     </ul>
                     <h5 class="mt-2"><b>Recently Assigned Task</b></h5>
 
-                    {{-- <ul class="list-group ">
-                        @foreach ($latestProjects as $latestProject)
-                            <li class="list-group-item d-flex justify-content-between align-items-start ">
+                    <ul class="list-group ">
+                        @foreach ($latestTasks as $latestTask)
+                            <li class="list-group-item  justify-content-between align-items-start ">
                                 <div class="ms-2 me-auto">
                                     <div class="fw-bold">
-                                        {{ $latestProject->title }}
+                                        {{ $latestTask['title'] }}
                                     </div>
                                     <a href="#">See more </a>
                                 </div>
-                                <span class="badge bg-primary rounded-pill">{}</span>
+
+                                @if ($latestTask['task_type'] == 1)
+                                    <span class="badge bg-primary rounded-pill">Dev & Test</span>
+                                @elseif ($latestTask['task_type'] == 2)
+                                    <span class="badge bg-primary rounded-pill">Dev</span>
+                                @else
+                                    <span class="badge bg-primary rounded-pill">Test</span>
+                                @endif
+
+                                <span class="badge bg-primary rounded-pill">{{ $latestTask['tags'] }}</span>
                             </li>
                         @endforeach
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
                             <a href="#">See All Tasks</a>
                         </li>
 
-                    </ul> --}}
+                    </ul>
 
                 </div>
             </div>

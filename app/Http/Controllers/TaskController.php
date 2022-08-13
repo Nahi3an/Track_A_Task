@@ -19,18 +19,8 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* public function redirectToAddTaskView($managerId, $projectInfo)
-    {
-        // dd($projectInfo);
-        $taskInfo = Task::where('project_id', $projectInfo['id'])->get();
-        $taskCount = count($taskInfo);
-        $developers = Developer::where('company_id', $projectInfo['company_id'])->get();
-        $testers = Tester::where('company_id', $projectInfo['company_id'])->get();
-        $taskTypes = Task_Type::where('id', '!=', '4')->get()->toArray();
 
-        return view('manager.task_dashboard', compact(['managerId', 'projectInfo', 'taskInfo', 'taskCount', 'testers', 'developers', 'taskTypes']));
-    }
-    */
+
     public function getReturnInfoToTaskDashboard($managerId, $projectInfo)
     {
         $taskInfo = Task::where('project_id', $projectInfo['id'])->get();
@@ -38,7 +28,19 @@ class TaskController extends Controller
         $developers = Developer::where('company_id', $projectInfo['company_id'])->get();
         $testers = Tester::where('company_id', $projectInfo['company_id'])->get();
         $taskTypes = Task_Type::where('id', '!=', '4')->get()->toArray();
-        $result = compact(['managerId', 'projectInfo', 'taskInfo', 'taskCount', 'testers', 'developers', 'taskTypes']);
+        $devTestTask =  Task::where('task_type', 1)->get()->toArray();
+        $devTask = Task::where('task_type', 2)->get()->toArray();
+        $testTask = Task::where('task_type', 3)->get()->toArray();
+        $latestTasks = Task::where('manager_id', $managerId)->orderBy('id', 'DESC')->limit(5)->get()->toArray();
+
+        $devTestTaskCount = count($devTestTask);
+        $devTaskCount = count($devTask);
+        $testTaskCount = count($testTask);
+
+
+
+
+        $result = compact(['managerId', 'projectInfo', 'taskInfo', 'taskCount', 'testers', 'developers', 'taskTypes', 'devTestTaskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']);
 
         return $result;
     }
@@ -50,6 +52,7 @@ class TaskController extends Controller
         $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
         // $this->redirectToAddTaskView($managerId, $projectInfo);
+
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
         return view('manager.task_dashboard', $result);
     }

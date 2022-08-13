@@ -18,7 +18,8 @@ class Projects extends Model
         'team_id',
         'user_id',
         'company_id',
-        'project_id'
+        'project_id',
+        'status'
     ];
 
     public function company()
