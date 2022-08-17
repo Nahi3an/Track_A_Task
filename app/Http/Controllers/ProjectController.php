@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manager;
 use App\Models\Projects;
+use App\Models\Task;
 use App\Models\Team;
 use App\Rules\DeveloperTesterUnique;
 use App\Rules\ValidateSelectField;
@@ -83,15 +85,39 @@ class ProjectController extends Controller
         return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
 
-    public function addTaskToOldProject(Request $request)
+    public function addTaskToProject(Request $request)
     {
+        // dd($request);
         $manager_id = $request->manager_id;
         $selected_project_info = Projects::where('id', $request->selected_project)->get()->toArray();
-        # dd($selected_project_info);
+        // dd($selected_project_info);
         $project_info = $selected_project_info[0];
         return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
 
+    public function getProjectAndTaskInfo()
+    {
+
+        $user_id = auth()->user()->id;
+        $manager = Manager::where('user_id', $user_id)->get()->first();
+
+        $managerId = $manager->id;
+        $projectInfo = Projects::all()->toArray();
+        $taskInfo = Task::where('manager_id', $managerId)->get();
+        $taskCount = count($taskInfo);
+        $devTestTask =  Task::where('task_type', 1)->get()->toArray();
+        // dd($devTestTask);
+        //Task::where('task_type', 1)->get()->toArray();
+        $devTask = Task::where('task_type', 2)->get()->toArray();
+        $testTask = Task::where('task_type', 3)->get()->toArray();
+        $latestTasks = Task::where('manager_id', $managerId)->orderBy('id', 'DESC')->limit(5)->get()->toArray();
+
+        $devTestTaskCount = count($devTestTask);
+        $devTaskCount = count($devTask);
+        $testTaskCount = count($testTask);
+
+        return view('manager.add_task', compact(['managerId', 'projectInfo', 'devTestTaskCount', 'taskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']));
+    }
     /**
      * Display the specified resource
      *

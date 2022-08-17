@@ -227,7 +227,7 @@
             <!-- Task Create -->
             <div class="row container-fluid">
                 <div class="col-md-7">
-                    <form method="POST" action={{ route('project.addTaskToOldProject') }}>
+                    <form method="POST" action={{ route('project.addTaskToProject') }}>
                         @csrf
                         <h5><b>Add Task To Project</b></h5>
                         <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>

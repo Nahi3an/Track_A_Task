@@ -23,7 +23,12 @@ class TaskController extends Controller
 
     public function getReturnInfoToTaskDashboard($managerId, $projectInfo)
     {
+        //dd($projectInfo['id']);
         $taskInfo = Task::where('project_id', $projectInfo['id'])->get();
+        $allTaskInfo = Task::all();
+        $allTaskCount = count($allTaskInfo);
+        // dd($allTaskCount);
+
         $taskCount = count($taskInfo);
         $developers = Developer::where('company_id', $projectInfo['company_id'])->get();
         $testers = Tester::where('company_id', $projectInfo['company_id'])->get();
@@ -40,7 +45,7 @@ class TaskController extends Controller
 
 
 
-        $result = compact(['managerId', 'projectInfo', 'taskInfo', 'taskCount', 'testers', 'developers', 'taskTypes', 'devTestTaskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']);
+        $result = compact(['managerId', 'projectInfo', 'taskInfo', 'allTaskCount', 'taskCount', 'testers', 'developers', 'taskTypes', 'devTestTaskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']);
 
         return $result;
     }

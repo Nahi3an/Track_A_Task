@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Models\Projects;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,15 +29,17 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'manager_role_access'], function () {
-        Route::get('/manager', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_dashboard');
-        Route::get('/manager/task', [TaskController::class, 'index'])->name('task_dashboard');
+        Route::get('/manager/home', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_dashboard');
 
-        // Project
-        Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
-        Route::post('/project/task', [ProjectController::class, 'addTaskToOldProject'])->name('project.addTaskToOldProject');
+        Route::post('/manager/project/store', [ProjectController::class, 'store'])->name('project.store');
 
-        //Task
-        Route::post('/manager/task/add', [TaskController::class, 'create'])->name('task.create');
+
+        Route::get('/manager/project/task', [ProjectController::class, 'getProjectAndTaskInfo'])->name('add_task');
+
+        Route::post('/manager/project/task/selected', [ProjectController::class, 'addTaskToProject'])->name('project.addTaskToProject');
+
+        Route::get('/manager/project/task/add', [TaskController::class, 'index'])->name('task_dashboard');
+        Route::post('/manager/project/task/store', [TaskController::class, 'create'])->name('task.create');
     });
     Route::group(['middleware' => 'developer_role_access'], function () {
         Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer_dashboard');

@@ -52,10 +52,10 @@
                                 class="fas fa-bars"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link">Home</a>
+                        <a href="{{ route('manager_dashboard') }}" class="nav-link">Panel Home</a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link">Profile</a>
+                        <a href="#" class="nav-link">Manager Profile</a>
                     </li>
 
                 </div>
@@ -191,7 +191,7 @@
         {{-- Main Sidebar Container --}}
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{ route('manager_dashboard') }}" class="brand-link">
                 <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Manager Panel</span>
@@ -217,33 +217,34 @@
                         data-accordion="false">
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link ">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="" class="nav-link ">
                                 <p>
-                                    Project Options
-                                    <i class="right fas fa-angle-left"></i>
+                                    Projects
+                                    <i class="fas fa-angle-left right"></i>
                                 </p>
+
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Project Option 1</p>
+                                    <a href="{{ route('manager_dashboard') }}" class="nav-link ">
+
+                                        <p>Add Project</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Project Option 2</p>
+
+                                        <p>All Projects</p>
                                     </a>
                                 </li>
+
 
                             </ul>
                         </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
+
                                 <p>
                                     Task Options
                                     <i class="fas fa-angle-left right"></i>
@@ -252,15 +253,21 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Task Options 1</p>
+                                    <a href="{{ route('add_task') }}" class="nav-link">
+
+                                        <p>Add Task</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Task Options 2</p>
+                                    <a href="#" class="nav-link">
+
+                                        <p>All Tasks By Type</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+
+                                        <p>All Tasks By Status</p>
                                     </a>
                                 </li>
 
@@ -268,7 +275,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+
                                 <p>
                                     Teams Option
                                     <i class="right fas fa-angle-left"></i>
@@ -277,14 +284,14 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Teams Option 1</p>
+
+                                        <p>All Team</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Teams Option 2</p>
+
+                                        <p></p>
                                     </a>
                                 </li>
 

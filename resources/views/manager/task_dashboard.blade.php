@@ -41,7 +41,7 @@
                                     <div class="col">
                                         <label for="taskId" class="text-md-end">{{ __('Task Id') }}</label>
                                         <input id="taskId" type="text" class="form-control"
-                                            value="task#00{{ $taskCount + 1 }}" disabled>
+                                            value="task#00{{ $allTaskCount + 1 }}" disabled>
                                     </div>
                                     <div class="col">
                                         <label for="task_title" class="text-md-end">{{ __('Task Title') }}</label>
@@ -225,7 +225,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">
-                                    Total Task Assigned
+                                    Total Project Task
                                 </div>
                                 <a href="#">See more </a>
                             </div>
