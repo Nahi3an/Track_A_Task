@@ -126,8 +126,6 @@
 
                                     <div class="col-md-5"><span class=" ">3 DAYS AGO</span>
                                     </div>
-                                    {{-- <span class="badge bg-primary">{{ $task['tags'] }}</span>
-                                <span class="badge bg-primary rounded-pill"> {{ $task['deadline'] }}</span> --}}
 
 
                                 </div>

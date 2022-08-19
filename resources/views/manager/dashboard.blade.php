@@ -74,13 +74,7 @@
                                                 <option value="not_selected">Not Selected
 
                                                 </option>
-                                                {{-- @if (old('role') == $role->id)
-                                                    <option value="{{ $role->id }}" selected>{{ $role->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $role->id }}">{{ $role->name }}
-                                                    </option>
-                                                @endif --}}
+
 
                                                 @foreach ($developers as $developer)
                                                     {{ $name = $developer->first_name . ' ' . $developer->last_name . ' (id: ' . $developer->id . ')' }}
@@ -149,13 +143,14 @@
 
                         </div>
                         <div class="row mb-3">
-                            <label for="deadline"
-                                class="col-md-4 col-form-label text-md-end">{{ __('Project Deadline') }}</label>
+                            <label for="deadline" class="col-md-4 col-form-label text-md-end">Project Deadline</label>
 
                             <div class="col-md-6">
+                                <small>**Minimum deadline 7 Days</small>
                                 <input id="deadline" type="date"
                                     class="form-control @error('deadline') is-invalid @enderror" name="deadline"
                                     value="{{ old('deadline') }}" required autocomplete="deadline" autofocus>
+
 
                                 @error('deadline')
                                     <span class="invalid-feedback" role="alert">
@@ -252,71 +247,7 @@
                 </div>
             </div>
 
-            {{-- <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
 
-                            <p>New Orders</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-plus-circle"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-circle-plus"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div> --}}
-            <!-- /.row -->
         </section>
     </div><!-- /.container-fluid -->
 

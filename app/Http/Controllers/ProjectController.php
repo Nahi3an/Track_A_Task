@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Manager;
 use App\Models\Projects;
 use App\Models\Task;
 use App\Models\Team;
 use App\Rules\DeveloperTesterUnique;
 use App\Rules\ValidateSelectField;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class ProjectController extends Controller
@@ -42,13 +45,22 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
+        //Getting date greater than equal to 7 days
+        $current = Carbon::today();
+        $deadlineRange = explode(" ", $current->addDays(7));
+        $deadlineRange = $deadlineRange[0];
+
         $request->validate([
+
             'project_title' => ['required', 'string', 'min:5', 'max:20'],
             'project_description' => ['required', 'string', 'min:15', 'max:255'],
             'developers.*' => ['required', new ValidateSelectField(), 'distinct'],
-            'testers.*' => ['required', new ValidateSelectField(), 'distinct']
+            'testers.*' => ['required', new ValidateSelectField(), 'distinct'],
+            'deadline' => ['required', 'after_or_equal:' . $deadlineRange]
 
         ]);
+
+
 
         // Getting the project id generated on the UI
         $project_id = $request->input('project_id');
