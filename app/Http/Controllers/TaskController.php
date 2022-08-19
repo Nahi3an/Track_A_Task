@@ -33,10 +33,18 @@ class TaskController extends Controller
         $developers = Developer::where('company_id', $projectInfo['company_id'])->get();
         $testers = Tester::where('company_id', $projectInfo['company_id'])->get();
         $taskTypes = Task_Type::where('id', '!=', '4')->get()->toArray();
-        $devTestTask =  Task::where('task_type', 1)->get()->toArray();
-        $devTask = Task::where('task_type', 2)->get()->toArray();
-        $testTask = Task::where('task_type', 3)->get()->toArray();
-        $latestTasks = Task::where('manager_id', $managerId)->orderBy('id', 'DESC')->limit(5)->get()->toArray();
+        $devTestTask =  Task::where('task_type', 1)
+            ->where('project_id', $projectInfo['id'])
+            ->get()->toArray();
+        $devTask = Task::where('task_type', 2)
+            ->where('project_id', $projectInfo['id'])
+            ->get()->toArray();
+        $testTask = Task::where('task_type', 3)
+            ->where('project_id', $projectInfo['id'])
+            ->get()->toArray();
+        $latestTasks = Task::where('manager_id', $managerId)
+            ->where('project_id', $projectInfo['id'])
+            ->orderBy('id', 'DESC')->limit(5)->get()->toArray();
 
         $devTestTaskCount = count($devTestTask);
         $devTaskCount = count($devTask);

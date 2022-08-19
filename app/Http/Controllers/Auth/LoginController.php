@@ -33,15 +33,15 @@ class LoginController extends Controller
         $role = auth()->user()->role;
 
         if ($role == '1') {
-            $this->redirectTo = '/manager';
+            $this->redirectTo = route('manager_dashboard');
             return   $this->redirectTo;
         } else if ($role == '2') {
 
-            $this->redirectTo = '/developer';
+            $this->redirectTo = route('developer_dashboard');
             return   $this->redirectTo;
         } else if ($role == '3') {
 
-            $this->redirectTo = '/tester';
+            $this->redirectTo = route('tester_dashboard');
             return   $this->redirectTo;
         }
     }

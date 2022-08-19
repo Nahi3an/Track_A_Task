@@ -146,7 +146,7 @@
                             <div class="col-md-6 mt-2">
                                 <div id="developersList">
                                     <label for="developer" style="margin-bottom: 0px;">Assign Developers</label> <br>
-                                    <small><b>(**Mark Not Selected for Task Type: Testing)</b></small>
+                                    {{-- <small><b>(**Mark Not Selected for Task Type: Testing)</b></small> --}}
                                     <select id="developer" type="text" value="{{ old('developer_id') }}"
                                         class="form-control @error('developer_id') is-invalid @enderror"
                                         name="developer_id">
@@ -179,7 +179,7 @@
                             <div class="col-md-6 mt-2">
                                 <div id="testersList">
                                     <label for="Tester" style="margin-bottom: 0px;">Assign Testers</label> <br>
-                                    <small><b>(**Mark Not Selected for Task Type: Development)</b></small>
+                                    {{-- <small><b>(**Mark Not Selected for Task Type: Development)</b></small> --}}
                                     <select id="tester" type="text"
                                         class="form-control @error('tester_id') is-invalid @enderror" name="tester_id"
                                         value={{ old('tester_id') }}>
@@ -220,7 +220,8 @@
                     </form>
                 </div>
                 <div class="col-md-4 mt-2">
-
+                    <h5 class=""><b>Project Overview
+                        </b></h5>
                     <ul class="list-group ">
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
                             <div class="ms-2 me-auto">
@@ -257,32 +258,40 @@
                             <span class="badge bg-primary rounded-pill">{{ $testTaskCount }}</span>
                         </li>
                     </ul>
-                    <h5 class="mt-2"><b>Recently Assigned Task</b></h5>
+                    <h5 class="mt-2"><b>Recent Project Tasks</b></h5>
 
                     <ul class="list-group ">
-                        @foreach ($latestTasks as $latestTask)
-                            <li class="list-group-item  justify-content-between align-items-start ">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">
-                                        {{ $latestTask['title'] }}
-                                    </div>
-                                    <a href="#">See more </a>
-                                </div>
-
-                                @if ($latestTask['task_type'] == 1)
-                                    <span class="badge bg-primary rounded-pill">Dev & Test</span>
-                                @elseif ($latestTask['task_type'] == 2)
-                                    <span class="badge bg-primary rounded-pill">Dev</span>
-                                @else
-                                    <span class="badge bg-primary rounded-pill">Test</span>
-                                @endif
-
-                                <span class="badge bg-primary rounded-pill">{{ $latestTask['tags'] }}</span>
+                        @if (sizeof($latestTasks) == 0)
+                            <li class="list-group-item d-flex justify-content-between align-items-start ">
+                                <div class="fw-bold">No Task Added</div>
                             </li>
-                        @endforeach
-                        <li class="list-group-item d-flex justify-content-between align-items-start ">
-                            <a href="#">See All Tasks</a>
-                        </li>
+                        @else
+                            @foreach ($latestTasks as $latestTask)
+                                <li class="list-group-item  justify-content-between align-items-start ">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">
+                                            {{ $latestTask['title'] }}
+                                        </div>
+                                        <a href="#">See more </a>
+                                    </div>
+
+                                    @if ($latestTask['task_type'] == 1)
+                                        <span class="badge bg-primary rounded-pill">Dev & Test</span>
+                                    @elseif ($latestTask['task_type'] == 2)
+                                        <span class="badge bg-primary rounded-pill">Dev</span>
+                                    @else
+                                        <span class="badge bg-primary rounded-pill">Test</span>
+                                    @endif
+
+                                    <span class="badge bg-primary rounded-pill">{{ $latestTask['tags'] }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start ">
+                                    <a href="#">See All Tasks</a>
+                                </li>
+                            @endforeach
+                        @endif
+
+
 
                     </ul>
 

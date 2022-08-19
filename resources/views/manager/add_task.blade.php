@@ -8,14 +8,9 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="row container-fluid" id="project_form">
-                {{--  --}}
-
-            </div>
-
-            <!-- Task Create -->
+            <!-- Select Project ID -->
             <div class="row container-fluid">
-                <div class="col-md-7 p-3 mx-3 mt-2 small-box bg-light">
+                <div class="col-md-8 p-3 mx-1 mt-3 small-box bg-light" style="width: 65%;">
                     <form method="POST" action="{{ route('project.addTaskToProject') }}">
                         @csrf
                         <h5><b>Add Task To Project</b></h5>
@@ -41,7 +36,7 @@
 
                 </div>
                 <div class="col-md-4 mt-2">
-
+                    <h5 class="mt-2"><b>Manager Tasks Overview</b></h5>
                     <ul class="list-group ">
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
                             <div class="ms-2 me-auto">
@@ -110,71 +105,6 @@
                 </div>
             </div>
 
-            {{-- <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-plus-circle"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-circle-plus"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div> --}}
-            <!-- /.row -->
         </section>
     </div><!-- /.container-fluid -->
 

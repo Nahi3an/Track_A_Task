@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DeveloperController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Models\Projects;
@@ -29,7 +31,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'manager_role_access'], function () {
-        Route::get('/manager/home', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_dashboard');
+        Route::get('/manager/home', [ManagerController::class, 'index'])->name('manager_dashboard');
 
         Route::post('/manager/project/store', [ProjectController::class, 'store'])->name('project.store');
 
@@ -42,9 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/manager/project/task/store', [TaskController::class, 'create'])->name('task.create');
     });
     Route::group(['middleware' => 'developer_role_access'], function () {
-        Route::get('/developer', [App\Http\Controllers\DeveloperController::class, 'index'])->name('developer_dashboard');
+        Route::get('/developer/home', [DeveloperController::class, 'index'])->name('developer_dashboard');
     });
     Route::group(['middleware' => 'tester_role_access'], function () {
-        Route::get('/tester', [App\Http\Controllers\TesterController::class, 'index'])->name('tester_dashboard');
+        Route::get('/tester/home', [TesterController::class, 'index'])->name('tester_dashboard');
     });
 });

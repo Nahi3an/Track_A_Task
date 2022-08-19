@@ -105,11 +105,15 @@ class ProjectController extends Controller
         $projectInfo = Projects::all()->toArray();
         $taskInfo = Task::where('manager_id', $managerId)->get();
         $taskCount = count($taskInfo);
-        $devTestTask =  Task::where('task_type', 1)->get()->toArray();
-        // dd($devTestTask);
-        //Task::where('task_type', 1)->get()->toArray();
-        $devTask = Task::where('task_type', 2)->get()->toArray();
-        $testTask = Task::where('task_type', 3)->get()->toArray();
+        $devTestTask =  Task::where('task_type', 1)
+            ->where('manager_id', $managerId)
+            ->get()->toArray();
+        $devTask = Task::where('task_type', 2)
+            ->where('manager_id', $managerId)
+            ->get()->toArray();
+        $testTask = Task::where('task_type', 3)
+            ->where('manager_id', $managerId)
+            ->get()->toArray();
         $latestTasks = Task::where('manager_id', $managerId)->orderBy('id', 'DESC')->limit(5)->get()->toArray();
 
         $devTestTaskCount = count($devTestTask);
