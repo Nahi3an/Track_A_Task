@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Developer;
 use App\Models\Projects;
 use App\Models\Task;
 use App\Models\Task_Type;
 use App\Models\Tester;
 use App\Rules\DevTesterValidationBasedOnTaskType;
+use App\Rules\validateDateTime;
 use App\Rules\ValidateSelectField;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Xml\Project;
@@ -23,27 +25,29 @@ class TaskController extends Controller
 
     public function getReturnInfoToTaskDashboard($managerId, $projectInfo)
     {
-        //dd($projectInfo['id']);
-        $taskInfo = Task::where('project_id', $projectInfo['id'])->get();
+
+
+        // dd($projectInfo[0]['company_id']);
+        $taskInfo = Task::where('project_id', $projectInfo[0]['id'])->get();
         $allTaskInfo = Task::all();
         $allTaskCount = count($allTaskInfo);
         // dd($allTaskCount);
 
         $taskCount = count($taskInfo);
-        $developers = Developer::where('company_id', $projectInfo['company_id'])->get();
-        $testers = Tester::where('company_id', $projectInfo['company_id'])->get();
+        $developers = Developer::where('company_id', $projectInfo[0]['company_id'])->get();
+        $testers = Tester::where('company_id', $projectInfo[0]['company_id'])->get();
         $taskTypes = Task_Type::where('id', '!=', '4')->get()->toArray();
         $devTestTask =  Task::where('task_type', 1)
-            ->where('project_id', $projectInfo['id'])
+            ->where('project_id', $projectInfo[0]['id'])
             ->get()->toArray();
         $devTask = Task::where('task_type', 2)
-            ->where('project_id', $projectInfo['id'])
+            ->where('project_id', $projectInfo[0]['id'])
             ->get()->toArray();
         $testTask = Task::where('task_type', 3)
-            ->where('project_id', $projectInfo['id'])
+            ->where('project_id', $projectInfo[0]['id'])
             ->get()->toArray();
         $latestTasks = Task::where('manager_id', $managerId)
-            ->where('project_id', $projectInfo['id'])
+            ->where('project_id', $projectInfo[0]['id'])
             ->orderBy('id', 'DESC')->limit(5)->get()->toArray();
 
         $devTestTaskCount = count($devTestTask);
@@ -64,6 +68,8 @@ class TaskController extends Controller
 
         $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
+        $projectInfo = [$projectInfo];
+        // dd($projectInfo);
         // $this->redirectToAddTaskView($managerId, $projectInfo);
 
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
@@ -78,9 +84,19 @@ class TaskController extends Controller
 
     {
 
+        $data = $request->all();
+
+        //For getting all project info
+        $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
+
+        //Project deadline & Project Assgined Date
+        $projectCreated = explode("T",  $projectInfo[0]['created_at']);
+        $projectDeadline =  explode(" ",  $projectInfo[0]['deadline']);
+
+
+        // Developer & Tester Custom Validation
         $conditionDev =  ['required', new ValidateSelectField()];
         $conditionTester =  ['required', new ValidateSelectField()];
-
         if ($request->task_type == '2') {
             $conditionTester =  [new DevTesterValidationBasedOnTaskType()];
         } elseif ($request->task_type == '3') {
@@ -97,11 +113,11 @@ class TaskController extends Controller
             'dead_line' => ['required'],
             'task_tag' => ['required', 'starts_with:#'],
             'developer_id' => $conditionDev,
-            'tester_id' => $conditionTester
+            'tester_id' => $conditionTester,
+            'dead_line' => ['required', 'after_or_equal:' .  $projectCreated[0], 'before_or_equal:' . $projectDeadline[0]]
 
         ]);
 
-        $data = $request->all();
 
 
         $status = 1;
@@ -133,9 +149,9 @@ class TaskController extends Controller
 
         );
 
+
         $managerId = $data['manager_id'];
-        $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
-        $projectInfo = $projectInfo[0];
+        // $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
 
         return view('manager.task_dashboard', $result);

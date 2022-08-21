@@ -45,11 +45,14 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
+
         //Getting date greater than equal to 7 days
+        //  date_default_timezone_set('Asia/Kolkata');
         $current = Carbon::today();
         $deadlineRange = explode(" ", $current->addDays(7));
         $deadlineRange = $deadlineRange[0];
 
+        // dd($request);
         $request->validate([
 
             'project_title' => ['required', 'string', 'min:5', 'max:20'],

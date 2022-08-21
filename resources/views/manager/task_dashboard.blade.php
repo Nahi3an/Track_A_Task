@@ -14,37 +14,34 @@
                             <div class="col">
 
                                 <input type="text" name="manager_id" value="{{ $managerId }}" hidden>
-                                <input type="text" name="company_id" value="{{ $projectInfo['company_id'] }}" hidden>
-                                <input type="text" name="project_id" value="{{ $projectInfo['id'] }}" hidden>
+                                <input type="text" name="company_id" value="{{ $projectInfo[0]['company_id'] }}" hidden>
+                                <input type="text" name="project_id" value="{{ $projectInfo[0]['id'] }}" hidden>
                                 <input type="text" class="form-control" name="task_id"
-                                    value="task#00{{ $taskCount + 1 }}" hidden>
+                                    value="task#00{{ $allTaskCount + 1 }}" hidden>
 
 
-                                <label class="text-md-end">{{ __('Project Id') }}</label>
-                                <input type="text" class="form-control" value="{{ $projectInfo['project_id'] }}"
+                                <label class="text-md-end">Project Id</label>
+                                <input type="text" class="form-control" value="{{ $projectInfo[0]['project_id'] }}"
                                     disabled>
                             </div>
                             <div class="col">
-                                <label for="project_title" class="text-md-end">{{ __('Project Title') }}</label>
+                                <label for="project_title" class="text-md-end">Project Title</label>
                                 <input type="text" name="project_title" class="form-control"
-                                    value="{{ $projectInfo['title'] }}" disabled>
+                                    value="{{ $projectInfo[0]['title'] }}" disabled>
                             </div>
 
                         </div>
-
-
-
                         <div class="row mb-2">
 
                             <div class="col-md">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="taskId" class="text-md-end">{{ __('Task Id') }}</label>
+                                        <label for="taskId" class="text-md-end">Task Id</label>
                                         <input id="taskId" type="text" class="form-control"
                                             value="task#00{{ $allTaskCount + 1 }}" disabled>
                                     </div>
                                     <div class="col">
-                                        <label for="task_title" class="text-md-end">{{ __('Task Title') }}</label>
+                                        <label for="task_title" class="text-md-end">Task Title</label>
 
                                         <input id="task_title" type="text"
                                             class="form-control @error('task_title') is-invalid @enderror" name="task_title"
@@ -60,82 +57,78 @@
 
                             </div>
                         </div>
+                        <div class="row mb-2">
+                            <div class="col-md-8">
 
-                        <div class="row ">
-                            <div class="col-md-12">
-                                <div class="col-md">
-                                    <label for="task_description">{{ __('Task Description') }}</label>
+                                <label for="task_description">Task Description</label>
 
-                                    <textarea id="task_description" type="text" class="form-control @error('task_description') is-invalid @enderror"
-                                        name="task_description" autocomplete="task_description" autofocus>{{ old('task_description') }}</textarea>
+                                <textarea id="task_description" type="text" class="form-control @error('task_description') is-invalid @enderror"
+                                    name="task_description" autocomplete="task_description" autofocus>{{ old('task_description') }}</textarea>
 
-                                    @error('task_description')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                @error('task_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
 
                             </div>
-                            <div class="row mt-2">
-                                <div class="col-md-5">
-                                    <label for="task_type" class="form-label">{{ __('Task Type ') }}</label>
-                                    <select id="taskType" type="text"
-                                        class="form-control  @error('task_type') is-invalid @enderror" name="task_type"
-                                        value="{{ old('task_type') }}">
-                                        <option value="not_selected">Not Selected</option>
+                            <div class="col-md-4">
+                                <label for="task_tag" class="form-label">Task Tag </label>
+                                <input id="taskTag" type="text" name="task_tag"
+                                    class="form-control @error('task_tag') is-invalid @enderror"
+                                    value="{{ old('task_tag') }}" autofocus>
 
-                                        @foreach ($taskTypes as $type)
-                                            @if (old('task_type') == $type['id'])
-                                                <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $type['id'] }}">{{ $type['task_type'] }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                @error('task_tag')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="task_type" class="form-label">Task Type </label>
+                                <select id="taskType" type="text"
+                                    class="form-control  @error('task_type') is-invalid @enderror" name="task_type"
+                                    value="{{ old('task_type') }}">
+                                    <option value="not_selected">Not Selected</option>
 
-                                    @error('task_type')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-
-
-                                </div>
-
-                                <div class="col-md-4">
-
-                                    <label for="deadline" class="form-label">{{ __('Task Deadline') }}</label>
-
-
-                                    <input id="deadline" type="date"
-                                        class="form-control @error('dead_line') is-invalid @enderror" name="dead_line"
-                                        value="{{ old('dead_line') }}" autofocus>
-
-                                    @error('dead_line')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    @foreach ($taskTypes as $type)
+                                        @if (old('task_type') == $type['id'])
+                                            <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $type['id'] }}">{{ $type['task_type'] }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
 
 
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="task_tag" class="form-label">{{ __('Task Tag ') }}</label>
-                                    <input id="taskTag" type="text" name="task_tag"
-                                        class="form-control @error('task_tag') is-invalid @enderror"
-                                        value="{{ old('task_tag') }}" autofocus>
+                                @error('task_type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
-                                    @error('task_tag')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
 
-                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label for="deadline" class="form-label">Task Deadline</label>
+                                <input id="deadline" type="datetime-local"
+                                    class="form-control @error('dead_line') is-invalid @enderror" name="dead_line"
+                                    value="{{ old('dead_line') }}" autofocus>
+
+                                @error('dead_line')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
 
                             </div>
 
@@ -207,17 +200,13 @@
                             </div>
 
                         </div>
-
-
-
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
                             {{-- <button type="button" class="btn btn-danger me-md-2" data-dismiss="modal">Cancel</button> --}}
                             <button class="btn btn-success" type="submit">Create</button>
                         </div>
-
-
                     </form>
+
                 </div>
                 <div class="col-md-4 mt-2">
                     <h5 class=""><b>Project Overview
@@ -297,43 +286,8 @@
 
                 </div>
             </div>
-
-
         </section>
-
     </div>
-    <script>
-        // const el = document.getElementById('taskType');
-
-        // const developersList = document.getElementById('developersList');
-        // const testersList = document.getElementById('testersList');
-
-        // //developersTestersList
-        // developersList.addEventListener('load'function onLoad() {
-
-        //     console.log(developersList.value);
-        // })
-
-        // el.addEventListener('change', function handleChange(event) {
-        //     if (event.target.value === 'not_selected' || event.target.value === '1') {
-        //         developersList.style.display = 'block';
-        //         testersList.style.display = 'block';
 
 
-
-        //     } else if (event.target.value === '2') {
-        //         developersList.style.display = 'block';
-        //         testersList.style.display = 'none';
-        //         // //developersList.value = 0;
-        //         // console.log(developersList.value)
-
-
-        //     } else if (event.target.value === '3') {
-        //         developersList.style.display = 'none';
-        //         testersList.style.display = 'block';
-        //         //  console.log(developersList.value)
-        //     }
-
-        // });
-    </script>
 @endsection
