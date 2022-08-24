@@ -35,13 +35,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/manager/project/store', [ProjectController::class, 'store'])->name('project.store');
 
-
         Route::get('/manager/project/task', [ProjectController::class, 'getProjectAndTaskInfo'])->name('add_task');
-
         Route::post('/manager/project/task/selected', [ProjectController::class, 'addTaskToProject'])->name('project.addTaskToProject');
-
         Route::get('/manager/project/task/add', [TaskController::class, 'index'])->name('task_dashboard');
         Route::post('/manager/project/task/store', [TaskController::class, 'create'])->name('task.create');
+        Route::get('/manager/project/all/{key?}', [ProjectController::class, 'index'])->name('project.show');
+        // Route::get('/manager/project/{key}', [ProjectController::class, 'show'])->name('project.show');
     });
     Route::group(['middleware' => 'developer_role_access'], function () {
         Route::get('/developer/home', [DeveloperController::class, 'index'])->name('developer_dashboard');

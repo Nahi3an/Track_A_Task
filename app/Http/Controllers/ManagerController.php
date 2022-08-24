@@ -20,7 +20,15 @@ class ManagerController extends Controller
         $company_id = $manager->company_id;
         $developers = Developer::where('company_id', $company_id)->get();
         $testers = Tester::where('company_id', $company_id)->get();
-        $projects = Projects::all();
-        return view('manager.dashboard', compact(['developers', 'testers', 'manager', 'projects', 'latestProjects']));
+        $projects = Projects::where('manager_id', $manager->id)->get();
+        $projectsCount = count($projects);
+        $ongoingProjects = Projects::where('manager_id', $manager->id)
+            ->where('status', 0)->get();
+        $ongoingProjectsCount = count($ongoingProjects);
+        $completedProjects = Projects::where('manager_id', $manager->id)
+            ->where('status', 1)->get();
+        $completedProjectsCount = count($completedProjects);
+
+        return view('manager.project.project_dashboard', compact(['developers', 'testers', 'manager', 'projects', 'latestProjects', 'projectsCount', 'ongoingProjectsCount', 'completedProjectsCount']));
     }
 }

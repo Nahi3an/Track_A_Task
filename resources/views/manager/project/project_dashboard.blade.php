@@ -25,7 +25,7 @@
 
                                 <label for="project_id" class="text-md-end">{{ __('Project Id') }}</label>
                                 <input id="project_id" type="text" class="form-control"
-                                    value="project#00{{ sizeof($projects) + 1 }}" disabled>
+                                    value="project#00{{ $projectsCount + 1 }}" disabled>
 
                                 <label for="project_title" class="text-md-end">{{ __('Project Title') }}</label>
 
@@ -179,21 +179,21 @@
                                 </div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">{{ sizeof($manager->projects) }}</span>
+                            <span class="badge bg-primary rounded-pill">{{ $projectsCount }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">On Going Projects</div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="badge bg-primary rounded-pill">{{ $ongoingProjectsCount }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Completed Projects</div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="badge bg-primary rounded-pill">{{ $completedProjectsCount }}</span>
                         </li>
                     </ul>
                     <h5 class="mt-2"><b>Recently Created Project</b></h5>

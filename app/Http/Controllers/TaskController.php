@@ -69,11 +69,10 @@ class TaskController extends Controller
         $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
         $projectInfo = [$projectInfo];
-        // dd($projectInfo);
-        // $this->redirectToAddTaskView($managerId, $projectInfo);
+
 
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
-        return view('manager.task_dashboard', $result);
+        return view('manager.task.task_dashboard', $result);
     }
     /**
      * Show the form for creating a new resource.
@@ -154,7 +153,7 @@ class TaskController extends Controller
         // $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
 
-        return view('manager.task_dashboard', $result);
+        return view('manager.task.task_dashboard', $result);
     }
 
     /**
