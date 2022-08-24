@@ -24,12 +24,11 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        // dd("hllo");
-        //
+
         $key = $request->key;
         $userId = auth()->user()->id;
         $manager = Manager::where('user_id', $userId)->get()->first();
-        //dd($manager->id);
+
 
 
         if ($key == "oldtonew") {
@@ -37,14 +36,19 @@ class ProjectController extends Controller
         } else if ($key == "newtoold") {
             $allProjects = Projects::orderBy('created_at', 'desc')->get();
         } else if ($key == "nearestbydeadline") {
-            $allProjects = Projects::orderBy('deadline', 'desc')->get();
-        } else if ($key == "farthestbydeadline") {
             $allProjects = Projects::orderBy('deadline', 'asc')->get();
+        } else if ($key == "farthestbydeadline") {
+            $allProjects = Projects::orderBy('deadline', 'desc')->get();
+        } else if ($key == "completed") {
+            $allProjects = Projects::where('status', 1)->get();
+        } else if ($key == "notcompleted") {
+            $allProjects = Projects::where('status', 0)->get();
         } else {
             $allProjects = Projects::where('manager_id', $manager->id)->get();
         }
 
-        // dd($allProjects);
+        // dd(count($allProjects));
+
         return view('manager.project.all_project', compact(['allProjects', 'key']));
     }
 
