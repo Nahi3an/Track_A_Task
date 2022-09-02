@@ -37,4 +37,10 @@ class Company extends Model
 
         return $this->hasMany(Projects::class);
     }
+
+    public function country()
+    {
+
+        return $this->belongsTo(Country::class);
+    }
 }

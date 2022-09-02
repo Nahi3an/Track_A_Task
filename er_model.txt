@@ -1,0 +1,37 @@
+**The Model containing fk uses belongs to
+
+Users |----| Manager  (Manager will take user_id as a fk)
+Users |----| Developer (Developer  will take user_id as a fk)
+Users |----| Tester (Tester  will take user_id as a fk)
+
+Country |------< Company (Company will take Country as fk)
+
+Company|-----| Company_Admin  (Company_admin will take company_id as a fk)
+Company |----< Manager  (Manager will take company_id as a fk)
+Company |----< Developer (Developer  will take company_id as a fk)
+Company |----< Tester (Tester  will take company_id as a fk)
+Company |----< Projects (Projects   will take company_id as a fk)
+
+
+Projects |------<Tasks (Tasks   will take project_id as a fk)
+Projects |------| Team (Teams will take project_id as a fk)
+
+Users |---| Role (Users Table Will take Role_id as a fk)
+
+/*****/
+Teams >-----< Developer
+=> Team_Developer (Team_Developer will take both of the id as fk)
+
+Teams >-----< Tester
+=> Team_Tester (Team_Tester will take both of the id as fk)
+
+Redo_tasks >-----| Tasks (Redo_tasks will take task_id as fk) [Remove tester_id]
+Redo_tasks |-----| Manager (Redo_tasks will take maanger_id as fk)
+Redo_tasks |-----| Developer (Redo_tasks will take dev_id as fk)
+
+
+Redo_test >-----| Tasks(Redo_test will take task_id as fk)
+Redo_test |-----| Manager (Redo_test will take maanger_id as fk)
+Redo_test |-----| Tester (Redo_test will take dev_id as fk)
+
+Tasks |-----| Task_Type (Task Table will take task_type_id as fk)

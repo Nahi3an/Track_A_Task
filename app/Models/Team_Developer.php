@@ -13,4 +13,6 @@ class Team_Developer extends Model
         'team_id',
         'developer_id'
     ];
+
+    // public
 }

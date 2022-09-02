@@ -26,6 +26,7 @@ class Manager extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function company()
     {
 

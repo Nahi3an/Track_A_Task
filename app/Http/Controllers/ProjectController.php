@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Developer;
 use Carbon\Carbon;
 use App\Models\Manager;
 use App\Models\Projects;
 use App\Models\Task;
 use App\Models\Team;
+use App\Models\Team_Developer;
+use App\Models\Team_Tester;
+use App\Models\Tester;
 use App\Rules\DeveloperTesterUnique;
 use App\Rules\ValidateSelectField;
 use DateTime;
@@ -173,17 +177,42 @@ class ProjectController extends Controller
      */
     public function show(Request $request)
     {
-        // dd($request->key);
 
+        $singleProjectInfo = Projects::where('id', $request->id)->first();
+        $projectTeam = Team::where('project_id', $request->id)->first();
+
+
+        $projectDevs = Team_Developer::where('team_id', $projectTeam->id)->get()->toArray();
+
+        $developers = array();
+        foreach ($projectDevs as $dev) {
+
+            $developer = Developer::where('id', $dev['developer_id'])->first();
+            $developer = array('id' => $developer->id, 'first_name' => $developer->first_name, 'last_name' => $developer->last_name);
+
+            array_push($developers,  $developer);
+        }
+
+
+
+        $projectTesters = Team_Tester::where('team_id', $projectTeam->id)->get()->toArray();
+
+        $testers = array();
+        foreach ($projectTesters as $test) {
+
+            $tester = Tester::where('id', $test['tester_id'])->first();
+            $tester = array('id' => $tester->id, 'first_name' => $tester->first_name, 'last_name' => $tester->last_name);
+
+            array_push($testers,  $tester);
+        }
+
+
+        //dd($testers);
+
+        return view('manager.project.single_project', compact(['singleProjectInfo', 'developers', 'testers']));
     }
 
-    // <option value="not_selected">Not Selected</option>
-    // <option value="oldtonew">Old To New</option>
-    // <option value="newtoold">New To Old</option>
-    // <option value="ascbydeadline">Nearest Deadline</option>
-    // <option value="descbydeadline">Farthest Deadline</option>
-    // <option value="completed">Completed</option>
-    // <option value="notcompleted">Not Completed</option>
+
 
 
     /**
@@ -194,7 +223,12 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $singleProjectInfo = Projects::select('id', 'title', 'description', 'deadline')
+            ->where('id', $id)->first();
+
+
+        return view('manager.project.project_edit', compact(['singleProjectInfo']));
     }
 
     /**
@@ -206,7 +240,26 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->new_deadline == null) {
+            $deadline = $request->old_deadline;
+        } else {
+            $deadline = $request->new_deadline;
+        }
+
+        // dd($deadline);
+
+        Projects::where('id', $id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'deadline' => $deadline,
+        ]);
+
+        $singleProjectInfo = Projects::select('id', 'title', 'description', 'deadline')
+            ->where('id', $id)->first();
+
+
+
+        return view('manager.project.project_edit', compact(['singleProjectInfo']));
     }
 
     /**

@@ -37,4 +37,10 @@ class Projects extends Model
     {
         return $this->belongsTo(Manager::class);
     }
+
+    public function task()
+    {
+
+        return $this->hasMany(Task::class);
+    }
 }
