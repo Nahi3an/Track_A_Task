@@ -23,11 +23,11 @@
 
                             <div class="col-md">
 
-                                <label for="project_id" class="text-md-end">{{ __('Project Id') }}</label>
+                                <label for="project_id" class="text-md-end">Global Project Id</label>
                                 <input id="project_id" type="text" class="form-control"
-                                    value="project#00{{ $projectsCount + 1 }}" disabled>
+                                    value="project#00{{ $allProjectsCount + 1 }}" disabled>
 
-                                <label for="project_title" class="text-md-end">{{ __('Project Title') }}</label>
+                                <label for="project_title" class="text-md-end">Project Title</label>
 
                                 <input id="project_title" type="text"
                                     class="form-control @error('project_title') is-invalid @enderror" name="project_title"
@@ -43,7 +43,7 @@
                         <div class="row mb-3">
 
                             <div class="col-md">
-                                <label for="project_description">{{ __('Project Description') }}</label>
+                                <label for="project_description">Project Description</label>
 
                                 <textarea id="project_description" type="text"
                                     class="form-control @error('project_description') is-invalid @enderror" name="project_description" required
@@ -172,6 +172,7 @@
                 <div class="col-md-4 mt-2">
 
                     <ul class="list-group ">
+                        <h5><b>Your Projects</b></h5>
                         <li class="list-group-item d-flex justify-content-between align-items-start ">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">
@@ -179,7 +180,7 @@
                                 </div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">{{ $projectsCount }}</span>
+                            <span class="badge bg-primary rounded-pill">{{ $totalProjectCount }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
@@ -199,20 +200,26 @@
                     <h5 class="mt-2"><b>Recently Created Project</b></h5>
 
                     <ul class="list-group ">
-                        @foreach ($latestProjects as $latestProject)
-                            <li class="list-group-item d-flex justify-content-between align-items-start ">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">
-                                        {{ $latestProject->title }}
+                        @if (count($latestProjects) > 0)
+                            @foreach ($latestProjects as $latestProject)
+                                <li class="list-group-item d-flex justify-content-between align-items-start ">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">
+                                            {{ $latestProject->title }}
+                                        </div>
+                                        <a href="#">See more </a>
                                     </div>
-                                    <a href="#">See more </a>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">{}</span>
+                                    <span class="badge bg-primary rounded-pill">{}</span>
+                                </li>
+                            @endforeach
+                            <li class="list-group-item d-flex justify-content-between align-items-start ">
+                                <a href="#">See All Projects</a>
                             </li>
-                        @endforeach
-                        <li class="list-group-item d-flex justify-content-between align-items-start ">
-                            <a href="#">See All Projects</a>
-                        </li>
+                        @else
+                            <li class="list-group-item d-flex justify-content-between align-items-start ">
+                                No Projects Found
+                            </li>
+                        @endif
 
                     </ul>
 

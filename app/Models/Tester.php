@@ -28,4 +28,20 @@ class Tester extends Model
 
         return $this->belongsTo(Company::class);
     }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function redo_test()
+    {
+        return $this->hasMany(Redo_Test::class);
+    }
+
+    public function teams()
+    {
+
+        return $this->belongsToMany(Team::class, 'testers_teams');
+    }
 }

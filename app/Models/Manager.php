@@ -38,4 +38,22 @@ class Manager extends Model
 
         return $this->hasMany(Projects::class);
     }
+
+    public function task()
+    {
+
+        return $this->hasMany(Task::class);
+    }
+
+    public function redo_task()
+    {
+
+        return $this->hasMany(Redo_Task::class);
+    }
+
+    public function redo_test()
+    {
+
+        return $this->hasMany(Redo_Test::class);
+    }
 }

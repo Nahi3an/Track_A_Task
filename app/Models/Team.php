@@ -22,4 +22,16 @@ class Team extends Model
 
         return $this->belongsTo(Projects::class);
     }
+
+    public function developers()
+    {
+
+        return $this->belongsToMany(Developer::class, 'developers_teams');
+    }
+
+    public function testers()
+    {
+
+        return $this->belongsToMany(Tester::class, 'testers_teams');
+    }
 }

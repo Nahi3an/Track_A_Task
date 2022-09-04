@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Developer;
 use App\Models\Team;
-use App\Models\Team_Developer;
-use App\Models\Team_Tester;
+use App\Models\Tester;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TeamsController extends Controller
@@ -16,7 +17,18 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        //
+
+
+        $dev = Developer::find(13);
+
+        /* $dev->teams()->attach(32);
+        $dev->teams()->detach(32);
+        $dev->teams()->sync(33); */
+
+        // dd($dev->teams);
+
+        $team = Team::find(32);
+        dd($team->developers);
     }
 
     /**
@@ -37,40 +49,32 @@ class TeamsController extends Controller
     public function store(Request $request)
     {
 
-        // Recieving the converted request object
-        $project_info = $request->request->all();
 
-        // Getting project id
-        $project_id = $project_info[0]['id'];
+
+        $request = $request->request->all();
+        $developerIds = $request['developer_id'];
+        $testerIds = $request['tester_id'];
+        $projectId = $request['project_id'];
 
         $team = Team::create([
 
-            'name' => 'Project Team',
-            'project_id' => $project_id
+            'name' => 'Team of Project: ' .  $projectId,
+            'project_id' => $projectId
         ]);
 
-        // Getting the team info of created project
-        $created_team_info = Team::where('project_id', $project_id)->get()->toArray();
-
-        $team_id = $created_team_info[0]['id'];
-
-        // Getting the developers ids sent form Project Controller
-        $developer_ids = $project_info[1];
-        // Getting the tester ids sent form Project Controller
-        $tester_ids = $project_info[2];
+        $team = Team::select('id')->where('project_id', $projectId)->first();
 
 
-        foreach ($developer_ids as $id) {
-            $team_developer = Team_Developer::create([
-                'team_id' => $team_id,
-                'developer_id' => $id
-            ]);
+        foreach ($developerIds as $id) {
+
+            $developer = Developer::find($id);
+            $developer->teams()->attach($team->id);
         }
-        foreach ($tester_ids as $id) {
-            $team_tester = Team_Tester::create([
-                'team_id' => $team_id,
-                'tester_id' => $id
-            ]);
+
+        foreach ($testerIds as $id) {
+
+            $tester = Tester::find($id);
+            $tester->teams()->attach($team->id);
         }
     }
 

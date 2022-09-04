@@ -31,7 +31,7 @@ class TaskController extends Controller
         $taskInfo = Task::where('project_id', $projectInfo[0]['id'])->get();
         $allTaskInfo = Task::all();
         $allTaskCount = count($allTaskInfo);
-        // dd($allTaskCount);
+        dd($allTaskCount);
 
         $taskCount = count($taskInfo);
         $developers = Developer::where('company_id', $projectInfo[0]['company_id'])->get();
@@ -68,7 +68,7 @@ class TaskController extends Controller
 
         $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
-        $projectInfo = [$projectInfo];
+        //$projectInfo = [$projectInfo];
 
 
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);

@@ -79,12 +79,10 @@ class ProjectController extends Controller
 
 
         //Getting date greater than equal to 7 days
-
         $current = Carbon::today();
         $deadlineRange = explode(" ", $current->addDays(7));
         $deadlineRange = $deadlineRange[0];
 
-        // dd($request);
         $request->validate([
 
             'project_title' => ['required', 'string', 'min:5', 'max:20'],
@@ -95,11 +93,6 @@ class ProjectController extends Controller
 
         ]);
 
-
-
-        // Getting the project id generated on the UI
-        $project_id = $request->input('project_id');
-        $manager_id = $request->input('manager_id');
 
         $project = Projects::create([
 
@@ -112,22 +105,20 @@ class ProjectController extends Controller
             'status' => 0
         ]);
 
-        //with generated project id getting the information of project as array
-        $created_project_info = Projects::where('project_id', $project_id)->get()->toArray();
+        //dd($project->get()->toArray());
+        $manager_id = $request->input('manager_id');
+        $project_info = Projects::where('project_id', $request->input('project_id'))->get()->toArray();
+        $projectId = Projects::select('id')->where('project_id', $request->input('project_id'))->first();
 
-        //All Project info to send In task UI
-        $project_info = $created_project_info[0];
-
-        //Passing the developers & tester ids into the arrray to pass it to the TeamsController
-        array_push($created_project_info, $request->input('developers'), $request->input('testers'));
-
-        // Creating a request object to pass all the project information to the store method of Teams controller
+        $developers = $request->developers;
+        $testers = $request->testers;
         $request = new Request();
-        $request->request->add($created_project_info);
-
-        // passing all project information as request object to TeamsController
+        $request->request->add(['developer_id' => $developers, 'project_id' => $projectId->id, 'tester_id' => $testers]);
         $team = new TeamsController();
         $team->store($request);
+
+
+        //dd($project_info);
 
         return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
@@ -182,29 +173,29 @@ class ProjectController extends Controller
         $projectTeam = Team::where('project_id', $request->id)->first();
 
 
-        $projectDevs = Team_Developer::where('team_id', $projectTeam->id)->get()->toArray();
+        // $projectDevs = Team_Developer::where('team_id', $projectTeam->id)->get()->toArray();
 
-        $developers = array();
-        foreach ($projectDevs as $dev) {
+        // $developers = array();
+        // foreach ($projectDevs as $dev) {
 
-            $developer = Developer::where('id', $dev['developer_id'])->first();
-            $developer = array('id' => $developer->id, 'first_name' => $developer->first_name, 'last_name' => $developer->last_name);
+        //     $developer = Developer::where('id', $dev['developer_id'])->first();
+        //     $developer = array('id' => $developer->id, 'first_name' => $developer->first_name, 'last_name' => $developer->last_name);
 
-            array_push($developers,  $developer);
-        }
+        //     array_push($developers,  $developer);
+        // }
 
 
 
-        $projectTesters = Team_Tester::where('team_id', $projectTeam->id)->get()->toArray();
+        // $projectTesters = Team_Tester::where('team_id', $projectTeam->id)->get()->toArray();
 
-        $testers = array();
-        foreach ($projectTesters as $test) {
+        // $testers = array();
+        // foreach ($projectTesters as $test) {
 
-            $tester = Tester::where('id', $test['tester_id'])->first();
-            $tester = array('id' => $tester->id, 'first_name' => $tester->first_name, 'last_name' => $tester->last_name);
+        //     $tester = Tester::where('id', $test['tester_id'])->first();
+        //     $tester = array('id' => $tester->id, 'first_name' => $tester->first_name, 'last_name' => $tester->last_name);
 
-            array_push($testers,  $tester);
-        }
+        //     array_push($testers,  $tester);
+        // }
 
 
         //dd($testers);

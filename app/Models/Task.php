@@ -28,4 +28,29 @@ class Task extends Model
 
         return $this->belongsTo(Projects::class);
     }
+
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class);
+    }
+
+    public function developer()
+    {
+        return $this->belongsTo(Developer::class);
+    }
+
+    public function task_type()
+    {
+        return $this->hasOne(task_type::class);
+    }
+
+    public function redo_task()
+    {
+        return $this->hasMany(Redo_Task::class);
+    }
+
+    public function redo_test()
+    {
+        return $this->hasMany(Redo_Test::class);
+    }
 }

@@ -27,4 +27,17 @@ class Developer extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function task()
+    {
+
+        return $this->hasMany(Task::class);
+    }
+
+
+    public function teams()
+    {
+
+        return $this->belongsToMany(Team::class, 'developers_teams');
+    }
 }
