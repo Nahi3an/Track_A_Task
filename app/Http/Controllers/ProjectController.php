@@ -51,7 +51,7 @@ class ProjectController extends Controller
             $allProjects = Projects::where('manager_id', $manager->id)->get();
         }
 
-        // dd(count($allProjects));
+
 
         return view('manager.project.all_project', compact(['allProjects', 'key']));
     }
@@ -76,6 +76,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
 
 
         //Getting date greater than equal to 7 days
@@ -105,7 +106,7 @@ class ProjectController extends Controller
             'status' => 0
         ]);
 
-        //dd($project->get()->toArray());
+
         $manager_id = $request->input('manager_id');
         $project_info = Projects::where('project_id', $request->input('project_id'))->get()->toArray();
         $projectId = Projects::select('id')->where('project_id', $request->input('project_id'))->first();
@@ -118,18 +119,25 @@ class ProjectController extends Controller
         $team->store($request);
 
 
-        //dd($project_info);
+
 
         return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
 
     public function addTaskToProject(Request $request)
     {
-        // dd($request);
+
+        $request->validate([
+            'selected_project' => ['required', new ValidateSelectField()]
+        ]);
+
         $manager_id = $request->manager_id;
-        $selected_project_info = Projects::where('id', $request->selected_project)->get()->toArray();
-        // dd($selected_project_info);
-        $project_info = $selected_project_info[0];
+        $selectedProjectInfo = Projects::where('id', $request->selected_project)->get()->toArray();
+
+
+        //dd($selectedProjectInfo->toArray());
+        $project_info = [$selectedProjectInfo[0]];
+        //dd($project_info);
         return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
     }
 
@@ -172,33 +180,8 @@ class ProjectController extends Controller
         $singleProjectInfo = Projects::where('id', $request->id)->first();
         $projectTeam = Team::where('project_id', $request->id)->first();
 
-
-        // $projectDevs = Team_Developer::where('team_id', $projectTeam->id)->get()->toArray();
-
-        // $developers = array();
-        // foreach ($projectDevs as $dev) {
-
-        //     $developer = Developer::where('id', $dev['developer_id'])->first();
-        //     $developer = array('id' => $developer->id, 'first_name' => $developer->first_name, 'last_name' => $developer->last_name);
-
-        //     array_push($developers,  $developer);
-        // }
-
-
-
-        // $projectTesters = Team_Tester::where('team_id', $projectTeam->id)->get()->toArray();
-
-        // $testers = array();
-        // foreach ($projectTesters as $test) {
-
-        //     $tester = Tester::where('id', $test['tester_id'])->first();
-        //     $tester = array('id' => $tester->id, 'first_name' => $tester->first_name, 'last_name' => $tester->last_name);
-
-        //     array_push($testers,  $tester);
-        // }
-
-
-        //dd($testers);
+        $developers = $projectTeam->developers;
+        $testers = $projectTeam->testers;
 
         return view('manager.project.single_project', compact(['singleProjectInfo', 'developers', 'testers']));
     }
@@ -237,7 +220,6 @@ class ProjectController extends Controller
             $deadline = $request->new_deadline;
         }
 
-        // dd($deadline);
 
         Projects::where('id', $id)->update([
             'title' => $request->title,

@@ -16,7 +16,7 @@
                         <h5><b>Create a New Project</b></h5>
                         <input type="text" name="company_id" value="{{ $manager->company_id }}" hidden>
                         <input type="text" name="manager_id" value="{{ $manager->id }}" hidden>
-                        <input type="text" name="project_id" value="project#00{{ sizeof($projects) + 1 }} " hidden>
+                        <input type="text" name="project_id" value="project#00{{ $allProjectsCount + 1 }} " hidden>
 
 
                         <div class="row mb-3">

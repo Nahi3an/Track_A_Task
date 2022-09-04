@@ -25,10 +25,8 @@ class TeamsController extends Controller
         $dev->teams()->detach(32);
         $dev->teams()->sync(33); */
 
-        // dd($dev->teams);
 
         $team = Team::find(32);
-        dd($team->developers);
     }
 
     /**

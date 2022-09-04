@@ -72,10 +72,10 @@
                     <h5 class="text-primary">Project Developer Team:</h5>
                     @foreach ($developers as $developer)
                         <div class="row">
-                            <div class="col-md-2"><span class="fw-bold">ID: </span>{{ $developer['id'] }}</div>
+                            <div class="col-md-2"><span class="fw-bold">ID: </span>{{ $developer->id }}</div>
 
                             <div class="col-md-10"><span class="fw-bold">Full Name:
-                                </span>{{ $developer['first_name'] . ' ' . $developer['last_name'] }}
+                                </span>{{ $developer->first_name . ' ' . $developer->last_name }}
                             </div>
 
                         </div>
@@ -86,10 +86,10 @@
                     <h5 class="text-primary mt-2">Project Tester Team:</h5>
                     @foreach ($testers as $tester)
                         <div class="row">
-                            <div class="col-md-2"><span class="fw-bold">ID: </span>{{ $tester['id'] }}</div>
+                            <div class="col-md-2"><span class="fw-bold">ID: </span>{{ $tester->id }}</div>
 
                             <div class="col-md-10"><span class="fw-bold">Full Name:
-                                </span>{{ $tester['first_name'] . ' ' . $tester['last_name'] }}
+                                </span>{{ $tester->first_name . ' ' . $tester->last_name }}
                             </div>
 
                         </div>

@@ -27,11 +27,11 @@ class TaskController extends Controller
     {
 
 
-        // dd($projectInfo[0]['company_id']);
+
         $taskInfo = Task::where('project_id', $projectInfo[0]['id'])->get();
         $allTaskInfo = Task::all();
         $allTaskCount = count($allTaskInfo);
-        dd($allTaskCount);
+
 
         $taskCount = count($taskInfo);
         $developers = Developer::where('company_id', $projectInfo[0]['company_id'])->get();
@@ -68,7 +68,8 @@ class TaskController extends Controller
 
         $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
-        //$projectInfo = [$projectInfo];
+
+        //echo "Hello";
 
 
         $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
@@ -87,7 +88,8 @@ class TaskController extends Controller
 
         //For getting all project info
         $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
-
+        echo "From Create Project";
+        dd($projectInfo);
         //Project deadline & Project Assgined Date
         $projectCreated = explode("T",  $projectInfo[0]['created_at']);
         $projectDeadline =  explode(" ",  $projectInfo[0]['deadline']);

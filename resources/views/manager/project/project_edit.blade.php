@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <a href="{{ route('project.getInfo', $singleProjectInfo->id) }}"
-                                        class="btn btn-sm btn-danger">Cancel</a>
+                                        class="btn btn-sm btn-danger">Go Back</a>
                                 </div>
 
                             </div>
