@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\Team_Developer;
 use App\Models\Team_Tester;
 use App\Models\Tester;
+use App\Models\User;
 use App\Rules\DeveloperTesterUnique;
 use App\Rules\ValidateSelectField;
 use DateTime;
@@ -118,10 +119,10 @@ class ProjectController extends Controller
         $team = new TeamsController();
         $team->store($request);
 
+        $project_info =  $project_info[0];
 
 
-
-        return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
+        return redirect()->route('task_dashboard', compact('project_info'));
     }
 
     public function addTaskToProject(Request $request)
@@ -135,36 +136,39 @@ class ProjectController extends Controller
         $selectedProjectInfo = Projects::where('id', $request->selected_project)->get()->toArray();
 
 
-        //dd($selectedProjectInfo->toArray());
-        $project_info = [$selectedProjectInfo[0]];
+        // dd($selectedProjectInfo);
+        $project_info = $selectedProjectInfo[0];
         //dd($project_info);
-        return redirect()->route('task_dashboard', compact(['manager_id', 'project_info']));
+        return redirect()->route('task_dashboard', compact('project_info'));
     }
 
     public function getProjectAndTaskInfo()
     {
 
-        $user_id = auth()->user()->id;
-        $manager = Manager::where('user_id', $user_id)->get()->first();
-
+        $userId = auth()->user()->id;
+        $user = User::find($userId);
+        $manager = $user->manager;
         $managerId = $manager->id;
-        $projectInfo = Projects::all()->toArray();
-        $taskInfo = Task::where('manager_id', $managerId)->get();
+        $projectInfo = $manager->projects;
+        $taskInfo = $manager->task;
         $taskCount = count($taskInfo);
+
         $devTestTask =  Task::where('task_type', 1)
-            ->where('manager_id', $managerId)
-            ->get()->toArray();
+            ->where('manager_id', $manager->id)
+            ->get();
         $devTask = Task::where('task_type', 2)
-            ->where('manager_id', $managerId)
-            ->get()->toArray();
+            ->where('manager_id', $manager->id)
+            ->get();
         $testTask = Task::where('task_type', 3)
-            ->where('manager_id', $managerId)
-            ->get()->toArray();
-        $latestTasks = Task::where('manager_id', $managerId)->orderBy('id', 'DESC')->limit(5)->get()->toArray();
+            ->where('manager_id', $manager->id)
+            ->get();
+        $latestTasks = Task::where('manager_id', $manager->id)->orderBy('id', 'DESC')->limit(5)->get();
 
         $devTestTaskCount = count($devTestTask);
         $devTaskCount = count($devTask);
         $testTaskCount = count($testTask);
+
+
 
         return view('manager.task.add_task', compact(['managerId', 'projectInfo', 'devTestTaskCount', 'taskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']));
     }

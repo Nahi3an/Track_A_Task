@@ -25,10 +25,8 @@
 
                             </option>
                             @foreach ($projectInfo as $project)
-                                @if ($project['manager_id'] == $managerId)
-                                    <option value="{{ $project['id'] }}">{{ $project['project_id'] }}
-                                    </option>
-                                @endif
+                                <option value="{{ $project->id }}">{{ $project->project_id }}
+                                </option>
                             @endforeach
 
                         </select>
@@ -41,30 +39,6 @@
                     </form>
 
 
-                    {{-- <label for="task_type" class="form-label">Task Type </label>
-                    id="selectedProject" type="text" class="form-control" name="selected_project"
-                    <select id="selectedProject" type="text"
-                        class="form-control  @error('task_type') is-invalid @enderror" name="selected_project"
-                        value="{{ old('selected_project') }}">
-                        <option value="not_selected">Not Selected</option>
-
-                        @foreach ($taskTypes as $type)
-                            @if (old('task_type') == $type['id'])
-                                <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
-                                </option>
-                            @else
-                                <option value="{{ $type['id'] }}">{{ $type['task_type'] }}
-                                </option>
-                            @endif
-                        @endforeach
-                    </select>
-
-
-                    @error('task_type')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror --}}
 
 
 

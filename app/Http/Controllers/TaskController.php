@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Carbon\Carbon;
 use App\Models\Developer;
 use App\Models\Projects;
@@ -23,32 +24,35 @@ class TaskController extends Controller
      */
 
 
-    public function getReturnInfoToTaskDashboard($managerId, $projectInfo)
+    public function getReturnInfoToTaskDashboard($projectInfo)
     {
 
+        $companyId = $projectInfo['company_id'];
+        $projectId = $projectInfo['id'];
+        $managerId = $projectInfo['manager_id'];
 
+        $company = Company::find($companyId);
+        $project = Projects::find($projectId);
+        $projectInfo =  $project;
 
-        $taskInfo = Task::where('project_id', $projectInfo[0]['id'])->get();
         $allTaskInfo = Task::all();
         $allTaskCount = count($allTaskInfo);
 
-
-        $taskCount = count($taskInfo);
-        $developers = Developer::where('company_id', $projectInfo[0]['company_id'])->get();
-        $testers = Tester::where('company_id', $projectInfo[0]['company_id'])->get();
-        $taskTypes = Task_Type::where('id', '!=', '4')->get()->toArray();
+        $developers = $company->developer;
+        $testers = $company->tester;
+        $taskTypes = Task_Type::where('id', '!=', '4')->get();
         $devTestTask =  Task::where('task_type', 1)
-            ->where('project_id', $projectInfo[0]['id'])
-            ->get()->toArray();
+            ->where('project_id', $projectId)
+            ->get();
         $devTask = Task::where('task_type', 2)
-            ->where('project_id', $projectInfo[0]['id'])
-            ->get()->toArray();
+            ->where('project_id', $projectId)
+            ->get();
         $testTask = Task::where('task_type', 3)
-            ->where('project_id', $projectInfo[0]['id'])
-            ->get()->toArray();
+            ->where('project_id', $projectId)
+            ->get();
         $latestTasks = Task::where('manager_id', $managerId)
-            ->where('project_id', $projectInfo[0]['id'])
-            ->orderBy('id', 'DESC')->limit(5)->get()->toArray();
+            ->where('project_id', $projectId)
+            ->orderBy('id', 'DESC')->limit(5)->get();
 
         $devTestTaskCount = count($devTestTask);
         $devTaskCount = count($devTask);
@@ -56,8 +60,7 @@ class TaskController extends Controller
 
 
 
-
-        $result = compact(['managerId', 'projectInfo', 'taskInfo', 'allTaskCount', 'taskCount', 'testers', 'developers', 'taskTypes', 'devTestTaskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']);
+        $result = compact(['managerId', 'projectInfo', 'allTaskCount', 'testers', 'developers', 'taskTypes', 'devTestTaskCount', 'devTaskCount', 'testTaskCount', 'latestTasks']);
 
         return $result;
     }
@@ -66,13 +69,9 @@ class TaskController extends Controller
     {
 
 
-        $managerId = $request->manager_id;
         $projectInfo = $request->project_info;
 
-        //echo "Hello";
-
-
-        $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
+        $result = $this->getReturnInfoToTaskDashboard($projectInfo);
         return view('manager.task.task_dashboard', $result);
     }
     /**
@@ -86,10 +85,8 @@ class TaskController extends Controller
 
         $data = $request->all();
 
-        //For getting all project info
         $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
-        echo "From Create Project";
-        dd($projectInfo);
+
         //Project deadline & Project Assgined Date
         $projectCreated = explode("T",  $projectInfo[0]['created_at']);
         $projectDeadline =  explode(" ",  $projectInfo[0]['deadline']);
@@ -151,11 +148,10 @@ class TaskController extends Controller
         );
 
 
-        $managerId = $data['manager_id'];
-        // $projectInfo = Projects::where('id', $data['project_id'])->get()->toArray();
-        $result = $this->getReturnInfoToTaskDashboard($managerId, $projectInfo);
 
-        return view('manager.task.task_dashboard', $result);
+        $project_info = $projectInfo[0];
+
+        return redirect()->route('task_dashboard', compact('project_info'));
     }
 
     /**

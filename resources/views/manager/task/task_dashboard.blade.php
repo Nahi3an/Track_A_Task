@@ -14,20 +14,19 @@
                             <div class="col">
 
                                 <input type="text" name="manager_id" value="{{ $managerId }}" hidden>
-                                <input type="text" name="company_id" value="{{ $projectInfo[0]['company_id'] }}" hidden>
-                                <input type="text" name="project_id" value="{{ $projectInfo[0]['id'] }}" hidden>
+                                <input type="text" name="company_id" value="{{ $projectInfo->company_id }}" hidden>
+                                <input type="text" name="project_id" value="{{ $projectInfo->id }}" hidden>
                                 <input type="text" class="form-control" name="task_id"
                                     value="task#00{{ $allTaskCount + 1 }}" hidden>
 
 
                                 <label class="text-md-end">Project Id</label>
-                                <input type="text" class="form-control" value="{{ $projectInfo[0]['project_id'] }}"
-                                    disabled>
+                                <input type="text" class="form-control" value="{{ $projectInfo->project_id }}" disabled>
                             </div>
                             <div class="col">
                                 <label for="project_title" class="text-md-end">Project Title</label>
                                 <input type="text" name="project_title" class="form-control"
-                                    value="{{ $projectInfo[0]['title'] }}" disabled>
+                                    value="{{ $projectInfo->title }}" disabled>
                             </div>
 
                         </div>
@@ -36,7 +35,7 @@
                             <div class="col-md">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="taskId" class="text-md-end">Task Id</label>
+                                        <label for="taskId" class="text-md-end">Global Task Id</label>
                                         <input id="taskId" type="text" class="form-control"
                                             value="task#00{{ $allTaskCount + 1 }}" disabled>
                                     </div>
@@ -96,11 +95,11 @@
                                     <option value="not_selected">Not Selected</option>
 
                                     @foreach ($taskTypes as $type)
-                                        @if (old('task_type') == $type['id'])
-                                            <option value="{{ $type['id'] }}" selected>{{ $type['task_type'] }}
+                                        @if (old('task_type') == $type->id)
+                                            <option value="{{ $type->id }}" selected>{{ $type->task_type }}
                                             </option>
                                         @else
-                                            <option value="{{ $type['id'] }}">{{ $type['task_type'] }}
+                                            <option value="{{ $type->id }}">{{ $type->task_type }}
                                             </option>
                                         @endif
                                     @endforeach
@@ -172,7 +171,7 @@
                             <div class="col-md-6 mt-2">
                                 <div id="testersList">
                                     <label for="Tester" style="margin-bottom: 0px;">Assign Testers</label> <br>
-                                    {{-- <small><b>(**Mark Not Selected for Task Type: Development)</b></small> --}}
+
                                     <select id="tester" type="text"
                                         class="form-control @error('tester_id') is-invalid @enderror" name="tester_id"
                                         value={{ old('tester_id') }}>
@@ -219,7 +218,8 @@
                                 </div>
                                 <a href="#">See more </a>
                             </div>
-                            <span class="badge bg-primary rounded-pill">{{ $taskCount }}</span>
+                            <span
+                                class="badge bg-primary rounded-pill">{{ $devTestTaskCount + $devTaskCount + $testTaskCount }}</span>
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -234,14 +234,14 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">Only Development Reated Task</div>
+                                <div class="fw-bold"> Development Reated Task</div>
                                 <a href="#">See more </a>
                             </div>
                             <span class="badge bg-primary rounded-pill">{{ $devTaskCount }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">Only Testing Reated Task</div>
+                                <div class="fw-bold"> Testing Reated Task</div>
                                 <a href="#">See more </a>
                             </div>
                             <span class="badge bg-primary rounded-pill">{{ $testTaskCount }}</span>
@@ -259,20 +259,20 @@
                                 <li class="list-group-item  justify-content-between align-items-start ">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold">
-                                            {{ $latestTask['title'] }}
+                                            {{ $latestTask->title }}
                                         </div>
                                         <a href="#">See more </a>
                                     </div>
 
-                                    @if ($latestTask['task_type'] == 1)
+                                    @if ($latestTask->task_type == 1)
                                         <span class="badge bg-primary rounded-pill">Dev & Test</span>
-                                    @elseif ($latestTask['task_type'] == 2)
+                                    @elseif ($latestTask->task_type == 2)
                                         <span class="badge bg-primary rounded-pill">Dev</span>
                                     @else
                                         <span class="badge bg-primary rounded-pill">Test</span>
                                     @endif
 
-                                    <span class="badge bg-primary rounded-pill">{{ $latestTask['tags'] }}</span>
+                                    <span class="badge bg-primary rounded-pill">{{ $latestTask->tags }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-start ">
                                     <a href="#">See All Tasks</a>
