@@ -49,8 +49,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('User Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text"
+                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -70,8 +71,15 @@
                                         class="form-control @error('country') is-invalid @enderror" name="country"
                                         value="{{ old('country') }}" required autocomplete="country" autofocus">
                                         <option value="not_selected">Not Selected</option>
+
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @if (old('country') == $country->id)
+                                                <option value="{{ $country->id }}" selected>{{ $country->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $country->id }}">{{ $country->name }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('country')
@@ -84,15 +92,28 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="company_name"
+                                <label for="company_id"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="company_name" type="text"
-                                        class="form-control @error('company_name') is-invalid @enderror" name="company_name"
-                                        value="{{ old('company_name') }}" required autocomplete="company_name" autofocus>
+                                    <select id="company_id" type="text"
+                                        class="form-control @error('company_id') is-invalid @enderror" name="company_id"
+                                        value="{{ old('company_id') }}" required autocomplete="company_id" autofocus>
 
-                                    @error('company_name')
+                                        <option value="not_selected">Not Selected</option>
+
+                                        @foreach ($companies as $company)
+                                            @if (old('company_id') == $company->id)
+                                                <option value="{{ $company->id }}" selected>{{ $company->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $company->id }}">{{ $company->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+
+                                    </select>
+                                    @error('company_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -107,12 +128,22 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Role') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="role" type="text" class="form-control @error('role') is-invalid @enderror"
-                                        name="role" value="{{ old('role') }}" required autocomplete="role" autofocus">
+                                    <select id="role" type="text"
+                                        class="form-control @error('role') is-invalid @enderror" name="role"
+                                        value="{{ old('role') }}" required autocomplete="role" autofocus">
+
                                         <option value="not_selected">Not Selected</option>
-                                        <option value="manager">Manager</option>
-                                        <option value="developer">Developer</option>
-                                        <option value="tester">Tester</option>
+
+                                        @foreach ($roles as $role)
+                                            @if (old('role') == $role->id)
+                                                <option value="{{ $role->id }}" selected>{{ $role->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $role->id }}">{{ $role->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+
                                     </select>
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">
@@ -129,8 +160,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Company Email') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    <input id="email" type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -181,7 +213,7 @@
 
                                 <div class="col-md-6">
                                     <textarea id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address"
-                                        value="{{ old('address') }}" required autocomplete="address"> </textarea>
+                                        value="{{ old('address') }}" required autocomplete="address">{{ old('address') }} </textarea>
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">

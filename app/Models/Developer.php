@@ -15,11 +15,29 @@ class Developer extends Model
         'personal_email',
         'contact_number',
         'address',
-        'user_id'
+        'user_id',
+        'company_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function task()
+    {
+
+        return $this->hasMany(Task::class);
+    }
+
+
+    public function teams()
+    {
+
+        return $this->belongsToMany(Team::class, 'developers_teams');
     }
 }

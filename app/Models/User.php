@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -43,14 +46,28 @@ class User extends Authenticatable
     ];
 
 
-    public function employee()
-    {
-        return $this->hasone(Employee::class);
-    }
+
 
     public function manager()
     {
 
         return $this->hasOne(Manager::class);
+    }
+
+    public function developer()
+    {
+
+        return $this->hasOne(Developer::class);
+    }
+
+    public function tester()
+    {
+
+        return $this->hasOne(Tester::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsTo(Roles::class);
     }
 }

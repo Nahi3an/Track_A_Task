@@ -13,4 +13,10 @@ class Country extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function country()
+    {
+
+        return $this->hasMany(Company::class);
+    }
 }
