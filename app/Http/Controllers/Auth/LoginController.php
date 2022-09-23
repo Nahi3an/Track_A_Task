@@ -26,24 +26,25 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo;
+    //protected $redirectTo;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     public function redirectTo()
     {
-        $role = auth()->user()->role;
+        // $role = auth()->user()->role;
 
-        if ($role == '1') {
-            $this->redirectTo = route('manager_dashboard');
-            return   $this->redirectTo;
-        } else if ($role == '2') {
+        // if ($role == '1') {
+        //     $this->redirectTo = route('manager_dashboard');
+        //     return   $this->redirectTo;
+        // } else if ($role == '2') {
 
-            $this->redirectTo = route('developer_dashboard');
-            return   $this->redirectTo;
-        } else if ($role == '3') {
+        //     $this->redirectTo = route('developer_dashboard');
+        //     return   $this->redirectTo;
+        // } else if ($role == '3') {
 
-            $this->redirectTo = route('tester_dashboard');
-            return   $this->redirectTo;
-        }
+        //     $this->redirectTo = route('tester_dashboard');
+        //     return   $this->redirectTo;
+        // }
     }
 
     /**
