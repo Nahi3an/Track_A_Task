@@ -60,19 +60,10 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $country_id = $data['country'];
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:8', 'unique:users'],
-            'country' => ['required', new ValidateSelectField()],
-            'company_id' => ['required', new ValidateSelectField(), new CompanyExistsInCountry($country_id)],
-            'role' => ['required', new ValidateSelectField()],
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'personal_email' => ['required', 'string', 'email', 'max:255', 'unique:employees', 'unique:managers'],
-            'contact_number' => ['required', 'string'],
-            'address' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:3', 'max:18', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -82,66 +73,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-
     protected function create(array $data)
     {
-        User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => ''
         ]);
-
-        $user = User::where('email', '=', $data['email'])->first();
-        $role = Roles::where('id', '=', $data['role'])->first();
-
-        if ($role->name == 'manager') {
-
-            DB::table('users')
-                ->where('id', $user->id)
-                ->update(['role' => $data['role']]);
-            Manager::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'address' => $data['address'],
-                'contact_number' => $data['contact_number'],
-                'user_id' => $user->id,
-                'personal_email' => $data['personal_email'],
-                'company_id' => $data['company_id']
-            ]);
-        } else if ($role->name == 'developer') {
-
-            DB::table('users')
-                ->where('id', $user->id)
-                ->update(['role' => $data['role']]);
-
-            Developer::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'address' => $data['address'],
-                'contact_number' => $data['contact_number'],
-                'user_id' => $user->id,
-                'personal_email' => $data['personal_email'],
-                'company_id' => $data['company_id']
-            ]);
-        } else {
-
-            DB::table('users')
-                ->where('id', $user->id)
-                ->update(['role' => $data['role']]);
-
-            Tester::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'address' => $data['address'],
-                'contact_number' => $data['contact_number'],
-                'user_id' => $user->id,
-                'personal_email' => $data['personal_email'],
-                'company_id' => $data['company_id']
-
-            ]);
-        }
     }
+
     /**
      * Handle a registration request for the application.
      *
@@ -153,8 +93,6 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
-
-        //$this->guard()->login($user);
 
         return $this->registered($request, $user)
             ?: redirect()->route('login')->with('success', 'Registration Sucess! Log in to your account!');

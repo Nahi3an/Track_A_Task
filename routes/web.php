@@ -7,9 +7,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TATController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\TesterController;
-use App\Models\Developer;
-use App\Models\Team;
-use App\Models\Team_Developer;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +28,7 @@ Route::get('/user-login', [TATController::class, 'userLogin'])->name('user.login
 
 
 Auth::routes();
-
+Route::get('/admin-dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
 
