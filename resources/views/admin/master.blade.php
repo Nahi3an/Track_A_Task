@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('back_end_asset/assets') }}/dist/css/adminlte.min.css">
 </head>
 
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
 
 
@@ -26,13 +26,14 @@
         @include('admin.include.header')
 
         <!-- Side bar -->
-        @include('admin.include.right-side-bar')
+        @include('admin.include.left-side-bar')
+
 
         <!-- Content Wrapper. Contains page content -->
         @yield('content')
         <!-- /.content-wrapper -->
+        @include('admin.include.right-side-bar')
 
-        @include('admin.include.left-side-bar')
         <!-- Main Footer -->
         @include('admin.include.footer')
 
