@@ -30,7 +30,7 @@ class Projects extends Model
 
     public function team()
     {
-        return $this->hasOne(Team::class);
+        return $this->hasOne(Team::class, 'project_id');
     }
 
     public function manager()

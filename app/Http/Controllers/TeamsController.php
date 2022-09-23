@@ -50,14 +50,17 @@ class TeamsController extends Controller
 
 
         $request = $request->request->all();
+
+
         $developerIds = $request['developer_id'];
         $testerIds = $request['tester_id'];
         $projectId = $request['project_id'];
+        $project = $request['project'];
 
-        $team = Team::create([
+        $project->team()->create([
 
             'name' => 'Team of Project: ' .  $projectId,
-            'project_id' => $projectId
+
         ]);
 
         $team = Team::select('id')->where('project_id', $projectId)->first();

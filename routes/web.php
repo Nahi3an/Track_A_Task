@@ -4,7 +4,9 @@ use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TATController;
 use App\Http\Controllers\TeamsController;
+use App\Http\Controllers\TesterController;
 use App\Models\Developer;
 use App\Models\Team;
 use App\Models\Team_Developer;
@@ -22,13 +24,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TATController::class, 'index'])->name('home');
+Route::get('/user-register', [TATController::class, 'userRegister'])->name('user.register');
+Route::get('/user-login', [TATController::class, 'userLogin'])->name('user.login');
+
 
 Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::group(['middleware' => 'auth'], function () {

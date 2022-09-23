@@ -115,7 +115,7 @@ class ProjectController extends Controller
         $developers = $request->developers;
         $testers = $request->testers;
         $request = new Request();
-        $request->request->add(['developer_id' => $developers, 'project_id' => $projectId->id, 'tester_id' => $testers]);
+        $request->request->add(['developer_id' => $developers, 'project_id' => $projectId->id, 'tester_id' => $testers, 'project' => $project]);
         $team = new TeamsController();
         $team->store($request);
 
