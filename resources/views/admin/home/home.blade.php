@@ -865,7 +865,7 @@
                                         </div>
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">Bicycle
-                                                <span class="badge badge-info float-right">$700</span></a>
+                                                <span class="badge badge-info float-right">$8800</span></a>
                                             <span class="product-description">
                                                 26" Mongoose Dolomite Men's 7-speed, Navy Blue.
                                             </span>
