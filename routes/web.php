@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProjectController;
@@ -33,9 +34,17 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin-dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+
+    //Company
+    Route::get('/add-company', [CompanyController::class, 'index'])->name('add.company');
+    Route::post('/new-company', [CompanyController::class, 'addCompany'])->name('new.company');
+    Route::get('/manage-company', [CompanyController::class, 'manageCompany'])->name('manage.company');
+    Route::get('/edit-companies/{id}', [CompanyController::class, 'editCompany'])->name('edit.company');
+
+    //Company Admin
     Route::get('/add-company-admin', [AdminController::class, 'showCompanyAdminForm'])->name('add.company.admin');
     Route::post('/new-company-admin', [AdminController::class, 'addCompanyAdmin'])->name('new.company.admin');
-    Route::post('/manage-company-admin', [AdminController::class, 'manageCompanyAdmin'])->name('manage.company.admin');
+    Route::get('/manage-company-admin', [AdminController::class, 'manageCompanyAdmin'])->name('manage.company.admin');
 
 
     // Route::group(['middleware' => 'manager_role_access'], function () {

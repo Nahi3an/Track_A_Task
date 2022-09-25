@@ -48,6 +48,30 @@
                  </li>
                  <li class="nav-item">
                      <a href="#" class="nav-link ">
+                         <i class="nav-icon fas fa-building"></i>
+                         <p>
+                             Company
+                             <i class="right fas fa-angle-left"></i>
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('add.company') }}" class="nav-link">
+                                 <i class="fas fa-user-plus nav-icon"></i>
+                                 <p>Add Company</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{ route('manage.company') }}" class="nav-link">
+                                 <i class="fas fa-wrench nav-icon"></i>
+                                 <p>Manage Company</p>
+                             </a>
+                         </li>
+
+                     </ul>
+                 </li>
+                 <li class="nav-item">
+                     <a href="#" class="nav-link ">
                          <i class="nav-icon fas fa-briefcase"></i>
                          <p>
                              Company Admin

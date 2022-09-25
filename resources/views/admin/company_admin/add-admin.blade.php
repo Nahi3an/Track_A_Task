@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Add Company Admin</h1>
+                        <h3 class="m-2 text-primary">Add Company Admin</h3>
                     </div>
 
                 </div><!-- /.row -->
@@ -21,42 +21,83 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="m-0">Company Admin Information Form</h3>
-                                        <form action="{{ route('new.company.admin') }}" method="POST"
-                                            enctype="multipart/form-data">
-                                            @csrf
+                                <form action="{{ route('new.company.admin') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4 class="m-0 text-secondary">Company Admin Information Form</h4>
+                                            <input type="hidden" value="{{ Auth::user()->id }}" name="admin_id">
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email address</label>
+                                                    <label for="exampleInputEmail1">First Name</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                                        placeholder="Enter First Name" name="first_name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Last Name</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                                        placeholder="Enter Last Name" name="last_name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Phone</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                                        placeholder="Enter Last Name" name="last_name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Company Designated Email</label>
                                                     <input type="email" class="form-control" id="exampleInputEmail1"
-                                                        placeholder="Enter email">
+                                                        placeholder="Company Designated Email" name="email">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputPassword1">Password</label>
-                                                    <input type="password" class="form-control" id="exampleInputPassword1"
-                                                        placeholder="Password">
+                                                    <label for="exampleInputEmail1">Address</label>
+                                                    <textarea type="text" name="address" class="form-control" id="exampleInputEmail1" placeholder="Personal Address">
+                                                    </textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputFile">Upload Image</label>
+                                                    <label for="exampleInputFile">Profile Picture</label>
                                                     <input type="file" style="border:none" class="form-control"
                                                         id="exampleInputFile">
                                                 </div>
-                                                <div class="form-group">
-                                                    <input type="submit" value="Add Admin" class="btn btn-sm btn-primary">
-                                                </div>
+
                                             </div>
-                                        </form>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="m-0 text-secondary">Company Information Form</h4>
+
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Company Name</label>
+                                                    <input type="text" name="company_name" class="form-control"
+                                                        id="exampleInputEmail1" placeholder="Company Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Website Link</label>
+                                                    <input type="text" name="website_url" class="form-control"
+                                                        id="exampleInputEmail1" placeholder="Website Link ">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Company Address</label>
+                                                    <textarea type="text" name="company_address" class="form-control" id="exampleInputEmail1"
+                                                        placeholder="Company Address">
+                                                    </textarea>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- /.card-body -->
+
                                     </div>
-                                    <!-- /.card-body -->
+                                    <div class="form-group text-center">
+                                        <input type="submit" value="Register Admin" class="btn btn-primary btn-lg">
+                                    </div>
 
-
-
-
-                                </div>
+                                </form>
                             </div>
                             <!-- /.row -->
                         </div>

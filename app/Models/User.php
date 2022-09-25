@@ -45,29 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-
-
-    public function manager()
+    public function companyAdmins()
     {
 
-        return $this->hasOne(Manager::class);
-    }
-
-    public function developer()
-    {
-
-        return $this->hasOne(Developer::class);
-    }
-
-    public function tester()
-    {
-
-        return $this->hasOne(Tester::class);
-    }
-
-    public function roles()
-    {
-        return $this->belongsTo(Roles::class);
+        return $this->hasMany(CompanyAdmin::class);
     }
 }
