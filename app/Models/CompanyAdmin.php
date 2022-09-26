@@ -10,7 +10,7 @@ class CompanyAdmin extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'company_id', 'first_name', 'last_name', 'email', 'password', 'address',  'image'];
+    protected $fillable = ['user_id', 'company_id', 'first_name', 'last_name', 'email', 'phone', 'password', 'address',  'image'];
 
     public function user()
     {

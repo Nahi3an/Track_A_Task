@@ -42,7 +42,7 @@
 
                                     <form action="{{ route('delete.company', ['company' => $company->id]) }}"
                                         method="POST"
-                                        onclick=" return confirm('Are You Sure You Want To Delete This Record?')">
+                                        onclick=" return confirm('You will erase all informations related to this Company (Comapny_Admin, Task, Employee ..) to this record!! Continue? ')">
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" class="btn btn-sm btn-danger" value="Delete">
