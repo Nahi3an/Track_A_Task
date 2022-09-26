@@ -16,8 +16,10 @@
                             <!-- /.card-header -->
                             <div class="card-body  pt-0">
                                 <h6 class="text-success fw-bold">{{ session('message') }}</h6>
-                                <form action="{{ route('new.company') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('update.company', ['company' => $company->id]) }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
+                                    @method('PUT')
                                     <div class="row">
                                         <div class="col-md-12">
 

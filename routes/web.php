@@ -35,11 +35,30 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin-dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
 
-    //Company
-    Route::get('/add-company', [CompanyController::class, 'index'])->name('add.company');
-    Route::post('/new-company', [CompanyController::class, 'addCompany'])->name('new.company');
-    Route::get('/manage-company', [CompanyController::class, 'manageCompany'])->name('manage.company');
-    Route::get('/edit-companies/{id}', [CompanyController::class, 'editCompany'])->name('edit.company');
+    // //Company
+    // Route::get('/companies', [CompanyController::class, 'index'])->name('manage.company');
+    // Route::get('/add-company', [CompanyController::class, 'index'])->name('add.company');
+    // Route::post('/new-company', [CompanyController::class, 'addCompany'])->name('new.company');
+
+    // Route::get('/companies/{company}/edit', [CompanyController::class, 'editCompany'])->name('edit.company');
+    // Route::post('/update-company', [CompanyController::class, 'updateCompnay'])->name('update.company');
+
+    Route::controller(CompanyController::class)->group(function () {
+        Route::get('/companies', 'index')->name('manage.company');
+        Route::get('/companies/create', 'create')->name('add.company');
+        Route::post('/companies/store', 'store')->name('new.company');
+        Route::get('/companies/{company}/edit', 'edit')->name('edit.company');
+        Route::put('/companies/{company}', 'update')->name('update.company');
+        Route::delete('/companies/{company}', 'destroy')->name('delete.company');
+    });
+
+    // GET	/photos	index	photos.index
+    // GET	/photos/create	create	photos.create
+    // POST	/photos/store	photos.store
+    // GET	/photos/{photo}	show	photos.show
+    // GET	/photos/{photo}/edit	edit	photos.edit
+    // PUT/PATCH	/photos/{photo}	update	photos.update
+    // DELETE	/photos/{photo}	destroy	photos.destroy
 
     //Company Admin
     Route::get('/add-company-admin', [AdminController::class, 'showCompanyAdminForm'])->name('add.company.admin');

@@ -6,8 +6,10 @@
             <div class="card-header">
                 <h2 class="card-title">Manage Company </h2>
             </div>
+
             <!-- /.card-header -->
             <div class="card-body">
+                <h6 class="text-success fw-bold">{{ session('message') }}</h6>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -27,7 +29,7 @@
                         @endphp
                         @foreach ($companies as $company)
                             <tr>
-                                <td>{{ $company->id }}</td>
+                                <td>{{ $i++ }}</td>
                                 <td>{{ $company->company_name }}</td>
                                 <td>{{ $company->address }}</td>
                                 <td>{{ $company->email }}</td>
@@ -35,28 +37,25 @@
                                 <td>{{ $company->name }}</td>
                                 <td>{{ $company->code }}</td>
                                 <td>
-                                    <div class="row">
-                                        <div class="col-md-6"> <a href="{{ route('edit.company', ['id' => $company->id]) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <form action="#" method="POST">
-                                                @csrf
-                                                <input type="submit" class="btn btn-sm btn-danger" value="Delete">
-                                            </form>
-                                        </div>
-                                    </div>
+                                    <a href="{{ route('edit.company', ['company' => $company->id]) }}"
+                                        class="btn btn-sm btn-primary">Edit</a>
+
+                                    <form action="{{ route('delete.company', ['company' => $company->id]) }}"
+                                        method="POST"
+                                        onclick=" return confirm('Are You Sure You Want To Delete This Record?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Delete">
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+
+
+                    </tbody>
+                </table>
             </div>
 
-            </td>
-            </tr>
-            @endforeach
-
-
-            </tbody>
-            </table>
         </div>
-
-    </div>
     </div>
 @endsection
