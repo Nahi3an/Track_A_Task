@@ -17,8 +17,10 @@
                             <!-- /.card-header -->
                             <div class="card-body pt-2">
                                 <h6 class="text-success fw-bold">{{ session('message') }}</h6>
-                                <form action="#" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('update.company.admin', ['companyAdmin' => $companyAdmin->id]) }}"
+                                    method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    @method('PUT')
                                     <div class="row">
                                         <div class="col-md-6">
                                             <input type="hidden" value="{{ Auth::user()->id }}" name="admin_id">
@@ -74,12 +76,12 @@
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Company Designated Email</label>
                                                 <input type="email" class="form-control" id="exampleInputEmail1"
-                                                    value="{{ $company->email }}" name="email">
+                                                    value="{{ $companyAdmin->email }}" name="email">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Address</label>
-                                                <textarea type="text" name="address" class="form-control" id="exampleInputEmail1">{{ $company->address }}
+                                                <textarea type="text" name="address" class="form-control" id="exampleInputEmail1">{{ $companyAdmin->address }}
                                                 </textarea>
                                             </div>
                                         </div>

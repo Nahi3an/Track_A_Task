@@ -9,7 +9,7 @@ use App\Models\Company;
 class CompanyAdminController extends Controller
 {
     //
-    public $image, $imageName, $imageDirectory, $companyAdminInfo;
+    public $image, $imageName, $imageDirectory, $companyAdminInfo, $existingImage;
 
     public function index()
     {
@@ -39,14 +39,22 @@ class CompanyAdminController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'password' => bcrypt('12345678'),
-            'image' => $this->saveImage($request)
+            'image' => $this->saveImage($request, null)
         ]);
 
         return back()->with('message', 'Company Admin Registration Success!');
     }
 
-    private function saveImage(Request $request)
+    private function saveImage(Request $request, $existingImage)
     {
+        if ($request->file('image') &&  $existingImage) {
+
+            unlink($existingImage);
+        } else if (!$request->file('image')) {
+
+            return $existingImage;
+        }
+
         if ($request->file('image')) {
 
             $this->imageName = rand() . '.' . $request->file('image')->getClientOriginalExtension();
@@ -60,5 +68,31 @@ class CompanyAdminController extends Controller
     {
 
         return view('admin.company_admin.edit-admin', ['companyAdmin' => $companyAdmin, 'companies' => Company::all()]);
+    }
+
+    public function update(CompanyAdmin $companyAdmin, Request $request)
+    {
+        $this->existingImage = $companyAdmin->image;
+
+        $companyAdmin->update([
+            'user_id' => $request->admin_id,
+            'company_id' => $request->company_id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'password' => bcrypt('12345678'),
+            'image' => $this->saveImage($request,  $this->existingImage)
+        ]);
+
+        return redirect()->route('manage.company.admin')->with('message', 'Company Admin Info Update Success!');
+    }
+
+    public function destroy(CompanyAdmin $companyAdmin)
+    {
+        unlink($companyAdmin->image);
+        $companyAdmin->delete();
+        return redirect()->route('manage.company.admin')->with('message', 'Company Admin Info Delete Success!');
     }
 }

@@ -54,13 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/company-admin/create', 'create')->name('add.company.admin');
         Route::post('/company-admin/store', 'store')->name('new.company.admin');
         Route::get('/company-admin/{companyAdmin}/edit', 'edit')->name('edit.company.admin');
+        Route::put('/company-admin/{companyAdmin}', 'update')->name('update.company.admin');
+        Route::delete('/company-admin/{companyAdmin}', 'destroy')->name('delete.company.admin');
     });
-
-    // //Company Admin
-    // Route::get('/add-company-admin', [AdminController::class, 'showCompanyAdminForm'])->name('add.company.admin');
-    // Route::post('/new-company-admin', [AdminController::class, 'addCompanyAdmin'])->name('new.company.admin');
-    // Route::get('/manage-company-admin', [AdminController::class, 'manageCompanyAdmin'])->name('manage.company.admin');
-
 
     // Route::group(['middleware' => 'manager_role_access'], function () {
     //     Route::get('/manager/home', [ManagerController::class, 'index'])->name('manager_dashboard');

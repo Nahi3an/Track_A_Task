@@ -16,7 +16,7 @@
                             <th>SL</th>
                             <th>Admin Name</th>
                             <th>Address</th>
-                            <th>Company Email</th>
+                            <th>Company Designated Email</th>
                             <th>Phone</th>
                             <th>Company Name</th>
                             <th>Image</th>
@@ -40,8 +40,9 @@
                                     <a href="{{ route('edit.company.admin', ['companyAdmin' => $companyAdmin->id]) }}"
                                         class="btn btn-sm btn-primary">Edit</a>
 
-                                    <form action="" method="POST"
-                                        onclick=" return confirm('You will erase all informations related to this Company (Comapny_Admin, Task, Employee ..) to this record!! Continue? ')">
+                                    <form
+                                        action="{{ route('delete.company.admin', ['companyAdmin' => $companyAdmin->id]) }}"
+                                        method="POST" onclick=" return confirm('Are you sure to Continue? ')">
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" class="btn btn-sm btn-danger" value="Delete">
